@@ -1,85 +1,35 @@
+import java.io.*;
+import java.util.*;
+
+import java.util.ArrayList;
+
+public
 class Solution
 {
-public:
-    int binarySearch(int start, int end, vector<int> &arr, int target)
+
+public
+    static int LongestSubsetWithZeroSum(ArrayList<Integer> arr)
     {
-        while (start < end)
+
+        // Write your code here.
+        int n = arr.size();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        int max = 0;
+        int max1 = 0;
+        for (int i = 0; i < n; i++)
         {
-            int mid = (start + end) / 2;
-            if (arr[mid] > target)
+            sum += arr.get(i);
+            if (map.containsKey(sum))
             {
-                end = mid;
+                max1 = i - (map.get(sum));
             }
             else
-            {
-                start = mid + 1;
-            }
+                map.put(sum, i);
+            if (sum == 0)
+                max1 = i + 1;
+            max = Math.max(max, max1);
         }
-        if (arr[start] > target)
-            return start;
-        return -1;
+        return max;
     }
-    void merge(int start1, int end1, int start2, int end2, vector<int> &arr, int &ans)
-    {
-        // cout << start1 << " " << end1 << " " << start2 << " " << end2 << endl;
-        vector<int> v(end2 - start1 + 1);
-        int ptr = 0;
-        int s = start1, e = end2;
-        while (start1 <= end1 && start2 <= end2)
-        {
-            if (arr[start1] > arr[start2])
-            {
-                // if(arr[start1] > 2*arr[start2])
-                // ans += end1-start1+1;
-                int index = binarySearch(start1, end1, arr, 2 * arr[start2]);
-                if (index != -1)
-                    ans += end1 - index + 1;
-                v[ptr] = arr[start2];
-                start2++;
-            }
-            else
-            {
-                v[ptr] = arr[start1];
-                start1++;
-            }
-            ptr++;
-        }
-
-        while (start1 <= end1)
-        {
-            v[ptr] = arr[start1];
-            start1++;
-            ptr++;
-        }
-
-        while (start2 <= end2)
-        {
-            v[ptr] = arr[start2];
-            start2++;
-            ptr++;
-        }
-        ptr = 0;
-
-        for (int i = s; i <= e; i++)
-        {
-            arr[i] = v[ptr];
-            ptr++;
-        }
-    }
-    void mergeSort(int start, int end, vector<int> &arr, int &ans)
-    {
-        if (start >= end)
-            return;
-        mergeSort(start, (start + end) / 2, arr, ans);
-        mergeSort((start + end) / 2 + 1, end, arr, ans);
-
-        merge(start, (start + end) / 2, (start + end) / 2 + 1, end, arr, ans);
-    }
-    int reversePairs(vector<int> &nums)
-    {
-        int ans = 0;
-        int n = nums.size();
-        mergeSort(0, n - 1, nums, ans);
-        return ans;
-    }
-};
+}
