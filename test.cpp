@@ -1,35 +1,30 @@
-import java.io.*;
-import java.util.*;
-
-import java.util.ArrayList;
-
-public
-class Solution
+int noOfPairs(vector<string> box)
 {
-
-public
-    static int LongestSubsetWithZeroSum(ArrayList<Integer> arr)
+    int count = 0;
+    int n = box.size();
+    for (int i = 0; i < n; i++)
     {
-
-        // Write your code here.
-        int n = arr.size();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int sum = 0;
-        int max = 0;
-        int max1 = 0;
-        for (int i = 0; i < n; i++)
+        for (int j = i + 1; j < n; j++)
         {
-            sum += arr.get(i);
-            if (map.containsKey(sum))
+            string concat_string = box[i] + box[j];
+            map<char, int> char_freq;
+            for (char c : concat_string)
             {
-                max1 = i - (map.get(sum));
+                char_freq[c] = char_freq.count(c) ? char_freq[c] + 1 : 1;
             }
-            else
-                map.put(sum, i);
-            if (sum == 0)
-                max1 = i + 1;
-            max = Math.max(max, max1);
+            int odd_count = 0;
+            for (auto it : char_freq)
+            {
+                if (it.second % 2 != 0)
+                {
+                    odd_count++;
+                }
+            }
+            if (odd_count <= 1)
+            {
+                count++;
+            }
         }
-        return max;
     }
+    return count;
 }

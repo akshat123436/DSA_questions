@@ -1,56 +1,191 @@
-/*   ________  _____                       ______________
-     _________ _____   IS THIS THE CODE EH?  _____________
-                                                         :)(pR)
-                                                                                                             */
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// #define fastio()                    \
+//   ios_base::sync_with_stdio(false); \
+//   cin.tie(NULL)
+// #define MOD 1000000007
+// #define MOD1 998244353
+// #define INF 1e18
+// #define endl "\n"
+// #define pb push_back
+// #define ppb pop_back
+// #define mp make_pair
+// #define ff first
+// #define ss second
+// #define PI 3.141592653589793238462
+// #define set_bits __builtin_popcountll
+// #define sz(x) ((int)(x).size())
+// #define all(x) (x).begin(), (x).end()
+// #define maxi (int)(1e7 + 10)
+// #define int long long
+
+// typedef long long ll;
+// typedef unsigned long long ull;
+// typedef long double lld;
+
+// #ifndef ONLINE_JUDGE
+// #define debug(x)     \
+//   cerr << #x << " "; \
+//   _print(x);         \
+//   cerr << endl;
+// #else
+// #define debug(x)
+// #endif
+
+// // void _print(ll t) {cerr << t;}
+// ////void _print(int t) {cerr << t;}
+// // void _print(string t) {cerr << t;}
+// // void _print(char t) {cerr << t;}
+// // void _print(lld t) {cerr << t;}
+// // void _print(double t) {cerr << t;}
+// // void _print(ull t) {cerr << t;}
+
+// // template <class T, class V> void _print(pair <T, V> p);
+// // template <class T> void _print(vector <T> v);
+// // template <class T> void _print(set <T> v);
+// // template <class T, class V> void _print(map <T, V> v);
+// // template <class T> void _print(multiset <T> v);
+// // template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+// // template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// // template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// // template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// // template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+
+// //---------------------------------------------------------------------------------------------------------------------------------------
+
+// bool cmp(int a, int b)
+// {
+//   return a < b;
+// }
+// bool accumulator(int a, int b)
+// {
+//   return a + b;
+// }
+// // Function to find the value of
+// // P * Q^-1 mod 998244353
+// long long calculate(long long p, long long q)
+// {
+//   long long mod = 998244353, expo;
+//   expo = mod - 2;
+//   // Loop to find the value
+//   // until the expo is not zero
+//   while (expo)
+//   {
+//     // Multiply p with q
+//     // if expo is odd
+//     if (expo & 1)
+//     {
+//       p = (p * q) % mod;
+//     }
+//     q = (q * q) % mod;
+//     // Reduce the value of
+//     // expo by 2
+//     expo >>= 1;
+//   }
+//   return p;
+// }
+// class business
+// {
+// private:
+//   map<int, int> parent;
+//   map<int, double> balance;
+
+// public:
+//   // id 0 can be assumed to be the  root parent of all the employees;
+//   business()
+//   {
+//     parent[0] = -1;
+//   }
+
+//   void addEmployee(int parentId, int childId)
+//   {
+//     parent[childId] = parentId;
+//   }
+
+//   void addSaleAmount(double amount, int empId)
+//   {
+//     if (empId == 0)
+//       return;
+//     balance[empId] += amount;
+
+//     addSaleAmount(amount / 10, parent[empId]);
+//   }
+
+//   double getBalance(int empId)
+//   {
+//     return balance[empId];
+//   }
+// };
+
+// int32_t main()
+// {
+
+//   fastio();
+
+// #ifndef ONLINE_JUDGE
+
+//   freopen("Error.txt", "w", stderr);
+
+// #endif
+
+//   int t = 1;
+
+//   // cin >> t;
+
+//   while (t--)
+//   {
+//     business *obj = new business();
+//     obj->addSaleAmount(100, 1);
+//     cout << obj->getBalance(1);
+//     cout << endl
+//          << endl;
+//     obj->addEmployee(1, 2);
+//     obj->addSaleAmount(100, 2);
+//     cout << obj->getBalance(1);
+//     cout << endl;
+//     cout << obj->getBalance(2);
+//     cout << endl
+//          << endl;
+//     obj->addEmployee(2, 3);
+//     obj->addSaleAmount(100, 3);
+//     cout << obj->getBalance(1);
+//     cout << endl;
+//     cout << obj->getBalance(2);
+//     cout << endl;
+//     cout << obj->getBalance(3);
+//     cout << endl
+//          << endl;
+//   }
+// }
 
 #include <bits/stdc++.h>
+
 using namespace std;
 
-//definition
-#define um unordered_map
-#define vi vector<int>
-#define vl vector<ld>
-#define vll vector<ll>
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define vpii vector<pii>
-#define vpll vector<pll>
-#define mi map<int, int>
-#define ml map<ll, ll>
-#define sl set<ll>
-
-//important constants
+#define fastio()                    \
+  ios_base::sync_with_stdio(false); \
+  cin.tie(NULL)
 #define MOD 1000000007
-#define INF 1LL << 57LL
-#define MAX 1000000
-#define pi 3.14159265358979
-#define ESP (1e-9)
-
-//looping
-#define fr(i, a) for (i = 0; i < a; i++)
-#define fe(i, a) for (i = 1; i <= a; i++)
-#define frw(i, a, n) for (i = a; i < n; i++)
-#define frwq(i, a, n) for (i = a; i <= n; i++)
-#define revq(i, n, a) for (i = n; i >= a; i--)
-//terms
+#define MOD1 998244353
+#define INF 1e18
+#define endl "\n"
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
 #define ff first
 #define ss second
-#define rev(i, n, a) for (i = n; i > a; i--)
-#define sz size()
-#define clr clear()
-#define len length()
-#define pb push_back
-#define mp make_pair
-#define gcd(a, b) __gcd(a, b)
-#define all(vi) vi.begin(), vi.end()
-#define grtsrt(v) sort(v.begin(), v.end(), greater<int>())
-#define lb lower_bound
-#define ub upper_bound
-#define nline '\n'
+#define PI 3.141592653589793238462
+#define set_bits __builtin_popcountll
+#define sz(x) ((int)(x).size())
+#define all(x) (x).begin(), (x).end()
+#define maxi (int)(1e7 + 10)
+// #define int long long
+
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lld;
-// typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update > pbds; // find_by_order, order_of_key
 
 #ifndef ONLINE_JUDGE
 #define debug(x)     \
@@ -65,7 +200,7 @@ void _print(ll t)
 {
   cerr << t;
 }
-void _print(int t) { cerr << t; }
+// void _print(int t) {cerr << t;}
 void _print(string t) { cerr << t; }
 void _print(char t) { cerr << t; }
 void _print(lld t) { cerr << t; }
@@ -136,229 +271,138 @@ void _print(map<T, V> v)
   cerr << "]";
 }
 
-//
-// long long calculate(long long p, long long q)
-// {
-//     long long  expo;
-//     expo = MOD - 2;
-//     // Loop to find the value
-//     // until the expo is not zero
-//     while (expo)
-//     {
-//         // Multiply p with q
-//         // if expo is odd
-//         if (expo & 1)
-//         {
-//             p = (p * q) % MOD;
-//         }
-//         q = (q * q) % MOD;
-//         // Reduce the value of
-//         // expo by 2
-//         expo >>= 1;
-//     }
-//     return p;
-// }
-// ll fact(ll n)
-// {
-//     ll i=0, f=1;
-//     for(i=1; i<=n; i++)
-//         f = (f*i)%MOD;
-//       // cout<<f<<nline;
-//     return f;
-// }
+//---------------------------------------------------------------------------------------------------------------------------------------
 
-// // void seive(){
-
-//   for(int i=0;i<N+1;i++)
-//       spf[i]=i;
-//     for(int i=2;i*i<=N;i++)
-//     {
-//       if(spf[i]==i)
-//       {
-//         for(int j=i*i;j<=N;j+=i)
-
-//           if(spf[j]==[j])
-//             spf[j]=i;
-//       }
-//     }
-
-// }
-
-// bool cmp(pair<pair<ll,ll>,ll> a,pair<pair<ll,ll>,ll> b)
-// {
-//   if(a.ss<b.ss)
-//     return true;
-//    return false;
-// }
-
-ll check_dude(ll mid, vll &v, ll n, ll sum)
+bool cmp(int a, int b)
 {
-  // vll a=v;
-  // sort(all(a));
-  // cout<<mid<<nline;
-  ll main = mid * n - sum;
-  ll x = (n + 1) / 2;
-  x--;
-  ll cost = 0;
-  ll var = mid;
-  // debug(a);
-  if (main < 0)
-    return -1;
-
-  for (int i = x; i < n; i++)
-  {
-    if (mid > v[i])
-    {
-      cost += mid - v[i];
-    }
-  }
-  // cout<<cost<<nline;
-  if (cost > main)
-  {
-    return -1;
-  }
-
-  // var-=cost;
-  // for(int i=0;i<x;i++){
-  //     if(var<=0)
-  //       break;
-  //    if(main>a[i]){
-  //        a[i]+=main-a[i];
-  //        var-=main-a[i];
-  //    }
-  // }
-  // sort(all(a));
-
-  // if(a[x]==main)
-  //   return main;
-
-  return main;
+  return a < b;
 }
-
-ll bs(ll low, ll high, vll &v, ll n, ll sum)
+bool accumulator(int a, int b)
 {
-  ll x = 0;
-  while (low <= high)
+  return a + b;
+}
+// Function to find the value of
+// P * Q^-1 mod 998244353
+long long calculate(long long p, long long q)
+{
+  long long mod = 998244353, expo;
+  expo = mod - 2;
+  // Loop to find the value
+  // until the expo is not zero
+  while (expo)
   {
-    // cout<<low<<" "<<high<<nline;
-    ll mid = low + (high - low) / 2;
-    // cout<<mid<<nline;
-    if (check_dude(mid, v, n, sum) != -1)
+    // Multiply p with q
+    // if expo is odd
+    if (expo & 1)
     {
-      // cout<<'a'<<nline;
-      high = mid - 1;
-      x = check_dude(mid, v, n, sum);
+      p = (p * q) % mod;
+    }
+    q = (q * q) % mod;
+    // Reduce the value of
+    // expo by 2
+    expo >>= 1;
+  }
+  return p;
+}
+class arr
+{
+public:
+  pair<int, int> findSecondMax(int n, int *v)
+  {
+    int original[n];
+    for (int i = 0; i < n - 1; i++)
+    {
+      cin >> v[i];
+      original[i] = v[i];
     }
 
-    else
-      low = mid + 1;
+    v[n] = 0;
+    original[n] = 0;
+    int totalCount = 0;
+    int sizee = n;
+    int s2 = ceil(log2(n)) + 1;
+    int arr[n], temp[n];
+    for (int i = 0; i < n; i++)
+    {
+      arr[i] = i;
+      temp[i] = i;
+    }
+    int cmpSize = (int)(ceil(log2(n)));
+    int comparedElements[n][cmpSize];
+    int count = 0;
+    for (int i = 0; i < s2; i++)
+    {
+      int c2 = 0;
+      int nextLevelSize = ceil((sizee - 1) / 2.0) + 1;
+      int *nextLevel = new int[nextLevelSize];
+
+      for (int j = 0; j < sizee - 1; j += 2)
+      {
+        int maxOfTwo = 0;
+        int minOfTwo = 0;
+        if (original[arr[j]] > original[arr[j + 1]])
+        {
+          totalCount++;
+          maxOfTwo = arr[j];
+          minOfTwo = original[arr[j + 1]];
+        }
+        else
+        {
+          totalCount++;
+          maxOfTwo = arr[j + 1];
+          minOfTwo = original[arr[j]];
+        }
+        comparedElements[maxOfTwo][count] = minOfTwo;
+        nextLevel[c2] = maxOfTwo;
+        c2++;
+      }
+
+      for (int k = 0; k < c2; k++)
+      {
+        arr[k] = nextLevel[k];
+      }
+      arr[c2] = n - 1;
+      sizee = sizee / 2 + 1;
+      count++;
+    }
+    int maxElementIndex = arr[0];
+    cout << maxElementIndex << endl;
+    int secMax = comparedElements[maxElementIndex][0];
+    for (int i = 1; i < cmpSize; i++)
+    {
+      secMax = max(comparedElements[maxElementIndex][i], secMax);
+      totalCount++;
+    }
+    return {secMax, totalCount};
   }
-
-  return x;
-}
-
-int main()
+};
+int32_t main()
 {
 
-  // freopen("input.txt","r",stdin);
-  // freopen("output.txt","w",stdout);
-  ios::sync_with_stdio(0);
-  cin.tie(0);
-  cout.tie(0);
+  fastio();
+
 #ifndef ONLINE_JUDGE
+
   freopen("Error.txt", "w", stderr);
+
 #endif
-  // seive();
-  // for(int i=1;i<=N;i++){
-  //        if(prime[i])
-  //          v.pb(i);
 
-  //   }
+  int t = 1;
 
-  int t;
-  cin >> t;
+  // cin >> t;
+
   while (t--)
   {
-    ll n, k, i = 0;
-    cin >> n >> k;
-    ll step = 0;
-    ll j = 1;
+    int n;
+    cin >> n;
+    n++;
+    // cout << n << endl;
+    int *v = new int[n];
+    // cout << n << endl;
+    arr *obj = new arr();
 
-    if (n == 2)
-    {
-      if (k % 2 == 0)
-        cout << 1 << " " << 2 << nline;
-      else
-        cout << 2 << " " << 1 << nline;
+    auto a = obj->findSecondMax(n, v);
 
-      continue;
-    }
-    // while (1)
-    // {
-
-    //   ll var = pow(2, j);
-    //   ll x = INF;
-    //   var++;
-
-    //   ll val = n - 1;
-    //   x = (var) % val;
-
-    //   if (x == 2)
-    //   {
-    //     step = j;
-    //     break;
-    //   }
-
-    //   j++;
-    // }
-    ll two = 2;
-    int num = 2;
-    int steps = 0;
-    do
-    {
-      // cout << num << " ";
-      if (num % two == 0)
-      {
-        num = n / two + num / two;
-      }
-      else
-      {
-        num = (num + ll(1)) / two;
-      }
-      // cout << i << " " << num << endl;
-
-      // cout << num << endl;
-      steps++;
-    } while (2 != num);
-    cout << steps << endl;
-    step = steps;
-    // cout<<j<<nline;
-    // step = k % step;
-
-    // ll diff = pow(2, step);
-    // ll fam = 1;
-    // cout << 1 << " ";
-    // fe(i, n - 1)
-    // {
-    //   ll val = n;
-    //   fam += diff;
-    //   if (fam < n)
-    //     // cout << fam << " ";
-    //   else
-    //   {
-
-    //     val = n - 1;
-    //     ll x = fam % val;
-    //     if (x == 0)
-    //       x = val;
-    //     if (x == 1)
-    //       x = n;
-    //     // cout << x << " ";
-    //   }
-    // }
-
-    // cout << nline;
+    cout << "Verdict : " << a.first << " " << a.second << endl;
   }
-
-  return 0;
 }

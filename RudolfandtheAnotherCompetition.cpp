@@ -55,9 +55,28 @@ typedef long double lld;
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 
-bool cmp(int a, int b)
+bool cmp(pair<pair<int, int>, int> &a, pair<pair<int, int>, int> &b)
 {
-    return a < b;
+    if (a.first.first > b.first.first)
+        return true;
+    else if (a.first.first < b.first.first)
+        return false;
+    else
+    {
+        if (a.first.second < b.first.second)
+            return true;
+        else if (a.first.second > b.first.second)
+            return false;
+        else
+        {
+            if (a.second == 0)
+                return true;
+            else if (b.second == 0)
+                return false;
+            else
+                return false;
+        }
+    }
 }
 bool accumulator(int a, int b)
 {
@@ -104,48 +123,54 @@ int32_t main()
 
     while (t--)
     {
-        string s;
-        cin >> s;
-        int n = s.length();
-        vector<char> maxRight(n);
+        int n, m, t;
+        cin >> n >> m >> t;
+        vector<vector<int>> players(n, vector<int>(m));
 
-        maxRight[n-1] = s[n-1];
-
-        for(int i = n-2;i>=0;i--){
-            maxRight[i] = max(maxRight[i+1], s[i]);
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                cin >> players[i][j];
+            }
+        }
+        for (int i = 0; i < n; i++)
+        {
+            sort(players[i].begin(), players[i].end());
+        }
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 1; j < m; j++)
+            {
+                players[i][j] += players[i][j - 1];
+            }
         }
 
+        vector<pair<pair<int, int>, int>> points(n);
 
-        int a =0, b = 0, c = 0, d = 0, e = 0;
-        vector<int> ca(n), cb(n), cc(n), cd(n), ce(n);
-
-
-        for(int i = 0;i<n;i++){
-            if(s[i] == 'A'){
-                a++;
+        for (int i = 0; i < n; i++)
+        {
+            int p = 0;
+            int penalty = 0;
+            for (int j = 0; j < m; j++)
+            {
+                if (players[i][j] <= t)
+                {
+                    p++;
+                    penalty += players[i][j];
+                }
             }
-            if(s[i] == 'B'){
-                b++;
-            }
-            if(s[i] == 'C'){
-                c++;
-            }
-            if(s[i] == 'D'){
-                d++;
-            }
-            if(s[i] == 'E'){
-                e++;
-            }
-
-            ca[i] = a;
-            cb[i] = b;
-            cc[i] = c;
-            ce[i] = e;
-            cd[i] = d;
-
-            
-
+            points[i] = {{p, penalty}, i};
         }
 
+        sort(points.begin(), points.end(), cmp);
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            // cout << i << " " << points[i].first.first << " " << points[i].first.second << endl;
+            if (points[i].second == 0)
+                ans = i;
+        }
+        cout << ans + 1 << endl;
     }
 }

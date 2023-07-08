@@ -86,7 +86,23 @@ long long calculate(long long p, long long q)
     }
     return p;
 }
-
+int resolver(char c)
+{
+    // cout << c << endl;
+    if (c == 'X')
+        return 0;
+    if (c == 'O')
+        return 1;
+    if (c == '+')
+        return 2;
+    return 3;
+}
+void reset(int *p)
+{
+    p[0] = 0;
+    p[1] = 0;
+    p[2] = 0;
+}
 int32_t main()
 {
 
@@ -104,48 +120,72 @@ int32_t main()
 
     while (t--)
     {
-        string s;
-        cin >> s;
-        int n = s.length();
-        vector<char> maxRight(n);
+        int players[4] = {0};
+        char board[3][3];
+        string ans = "DRAW";
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                cin >> board[i][j];
+            }
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                players[resolver(board[i][j])]++;
+            }
+            if (players[2] == 3)
+                ans = "+";
+            if (players[0] == 3)
+                ans = "X";
+            if (players[1] == 3)
+                ans = "O";
 
-        maxRight[n-1] = s[n-1];
-
-        for(int i = n-2;i>=0;i--){
-            maxRight[i] = max(maxRight[i+1], s[i]);
+            reset(players);
         }
 
-
-        int a =0, b = 0, c = 0, d = 0, e = 0;
-        vector<int> ca(n), cb(n), cc(n), cd(n), ce(n);
-
-
-        for(int i = 0;i<n;i++){
-            if(s[i] == 'A'){
-                a++;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                players[resolver(board[j][i])]++;
             }
-            if(s[i] == 'B'){
-                b++;
-            }
-            if(s[i] == 'C'){
-                c++;
-            }
-            if(s[i] == 'D'){
-                d++;
-            }
-            if(s[i] == 'E'){
-                e++;
-            }
+            if (players[0] == 3)
+                ans = "X";
+            if (players[1] == 3)
+                ans = "O";
+            if (players[2] == 3)
+                ans = "+";
+            reset(players);
+        }
+        for (int i = 0; i < 3; i++)
+        {
 
-            ca[i] = a;
-            cb[i] = b;
-            cc[i] = c;
-            ce[i] = e;
-            cd[i] = d;
+            players[resolver(board[i][i])]++;
 
-            
+            if (players[0] == 3)
+                ans = "X";
+            if (players[1] == 3)
+                ans = "O";
+            if (players[2] == 3)
+                ans = "+";
+        }
+        reset(players);
+        for (int i = 2; i >= 0; i--)
+        {
 
+            players[resolver(board[2 - i][i])]++;
+
+            if (players[0] == 3)
+                ans = "X";
+            if (players[1] == 3)
+                ans = "O";
+            if (players[2] == 3)
+                ans = "+";
         }
 
+        cout << ans << endl;
     }
 }

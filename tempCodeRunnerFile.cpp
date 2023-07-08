@@ -1,3 +1,1 @@
-; i++)
-            cout << arr[i] << " ";
-        cout << endl;
+4 7 3 2 8

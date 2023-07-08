@@ -104,48 +104,18 @@ int32_t main()
 
     while (t--)
     {
-        string s;
-        cin >> s;
-        int n = s.length();
-        vector<char> maxRight(n);
+        int count = 0;
+        int a, b;
+        int n;
+        cin >> n;
 
-        maxRight[n-1] = s[n-1];
+        while (n--)
+        {
+            cin >> a >> b;
 
-        for(int i = n-2;i>=0;i--){
-            maxRight[i] = max(maxRight[i+1], s[i]);
+            if (a > b)
+                count++;
         }
-
-
-        int a =0, b = 0, c = 0, d = 0, e = 0;
-        vector<int> ca(n), cb(n), cc(n), cd(n), ce(n);
-
-
-        for(int i = 0;i<n;i++){
-            if(s[i] == 'A'){
-                a++;
-            }
-            if(s[i] == 'B'){
-                b++;
-            }
-            if(s[i] == 'C'){
-                c++;
-            }
-            if(s[i] == 'D'){
-                d++;
-            }
-            if(s[i] == 'E'){
-                e++;
-            }
-
-            ca[i] = a;
-            cb[i] = b;
-            cc[i] = c;
-            ce[i] = e;
-            cd[i] = d;
-
-            
-
-        }
-
+        cout << count << endl;
     }
 }
