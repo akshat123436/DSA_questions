@@ -130,5 +130,25 @@ int main()
 
     while (t--)
     {
+        int n;
+        cin >> n;
+        int maxQuality = 0;
+        int ans = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            int a, b;
+            cin >> a >> b;
+
+            if (a <= 10)
+            {
+                if (b > maxQuality)
+                {
+                    maxQuality = b;
+                    ans = i;
+                }
+            }
+        }
+
+        cout << ans << endl;
     }
 }

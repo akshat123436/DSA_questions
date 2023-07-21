@@ -20,7 +20,6 @@ using namespace std;
 #define sz(x) ((int)(x).size())
 #define all(x) (x).begin(), (x).end()
 #define maxi 1e7 + 10;
-
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lld;
@@ -117,18 +116,58 @@ public:
 };
 int main()
 {
-
+    fastio();
 #ifndef ONLINE_JUDGE
 
     freopen("Error.txt", "w", stderr);
 
 #endif
 
-    int t = 1;
+    long long t = 1;
 
     cin >> t;
 
     while (t--)
     {
+        long long n, c;
+        cin >> n >> c;
+
+        long long low = 0, high = 1e18 / (4 * n);
+
+        long long sum = 0, squareSum = 0;
+
+        for (long long i = 0; i < n; i++)
+        {
+            long long temp;
+            cin >> temp;
+            sum += temp;
+            squareSum += temp * temp;
+        }
+        int t = max(4 * n, sum);
+        high = 1e18 / (t * t);
+        long long val = c - squareSum;
+        long long ans = 0;
+        while (high - low >= 0)
+        {
+            // cout << low << " " << high << endl;
+            long long mid = (low + high) / 2;
+            long long res = 4 * n * mid * mid + 4 * mid * sum;
+            // cout << val << " " << res << endl;
+            if (res == val)
+            {
+                ans = mid;
+                break;
+            }
+            else if (res > val)
+            {
+                high = mid - 1;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
+
+        cout << ans << endl;
     }
 }

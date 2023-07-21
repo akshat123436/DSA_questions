@@ -130,5 +130,23 @@ int main()
 
     while (t--)
     {
+        int arr[3];
+        int sum = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            cin >> arr[i];
+            sum += arr[i];
+        }
+        bool possible = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (sum - arr[i] >= 10)
+                possible = true;
+        }
+
+        if (possible)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
 }

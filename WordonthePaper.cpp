@@ -115,6 +115,19 @@ public:
         }
     }
 };
+
+string findIt(vector<vector<char>> &arr, int row, int col)
+{
+    string ans;
+
+    while (row < 8 && arr[row][col] != '.')
+    {
+        ans.push_back(arr[row][col]);
+        row++;
+    }
+
+    return ans;
+}
 int main()
 {
 
@@ -129,6 +142,32 @@ int main()
     cin >> t;
 
     while (t--)
+
     {
+        // char arr[8][8];
+        vector<vector<char>> arr(8, vector<char>(8));
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+                cin >> arr[i][j];
+        }
+        string ans;
+        bool found = false;
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (arr[i][j] != '.')
+                {
+                    ans = findIt(arr, i, j);
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
+                break;
+        }
+
+        cout << ans << endl;
     }
 }
