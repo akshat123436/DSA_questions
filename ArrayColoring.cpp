@@ -52,38 +52,69 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}*/
-#include <bits/stdc++.h>
-#define pi pair<int, int>
-bool compare(pi &a, pi &b)
+class DisjointSet
 {
-    return a.second > b.second;
-}
-int jobScheduling(vector<vector<int>> &jobs)
-{
-    // Write your code here
-    int c = 0;
-    vector<pi> v;
-    for (int i = 0; i < jobs.size(); i++)
-        v.push_back({jobs[i][0], jobs[i][1]});
-    sort(v.begin(), v.end(), compare);
-    pi p = *max_element(v.begin(), v.end());
-    int slotSize = p.first;
-    // cout<<slotSize<<'\n';
-    vector<int> slot(slotSize + 1, -1);
-    for (int i = 0; i < v.size(); i++)
+    vector<int> rank, parent, size;
+
+public:
+    DisjointSet(int n)
     {
-        for (int j = v[i].first; j > 0; j--)
+        rank.resize(n + 1, 0);
+        parent.resize(n + 1);
+        size.resize(n + 1);
+        for (int i = 0; i <= n; i++)
         {
-            if (slot[j] == -1)
-            {
-                slot[j] = v[i].first;
-                c += v[i].second;
-                break;
-            }
+            parent[i] = i;
+            size[i] = 1;
         }
     }
-    return c;
-}
+
+    int findUPar(int node)
+    {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    void unionByRank(int u, int v)
+    {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v)
+            return;
+        if (rank[ulp_u] < rank[ulp_v])
+        {
+            parent[ulp_u] = ulp_v;
+        }
+        else if (rank[ulp_v] < rank[ulp_u])
+        {
+            parent[ulp_v] = ulp_u;
+        }
+        else
+        {
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+
+    void unionBySize(int u, int v)
+    {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v)
+            return;
+        if (size[ulp_u] < size[ulp_v])
+        {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else
+        {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+};
 int main()
 {
     fastio();
@@ -95,10 +126,23 @@ int main()
 
     int t = 1;
 
-    // cin >> t;
+    cin >> t;
 
     while (t--)
     {
-        static intx
+        int n;
+        cin >> n;
+        int count = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int temp;
+            cin >> temp;
+            if (temp % 2)
+                count++;
+        }
+        if (count % 2)
+            cout << "NO" << endl;
+        else
+            cout << "YES" << endl;
     }
 }
