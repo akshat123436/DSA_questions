@@ -116,28 +116,6 @@ public:
         }
     }
 };
-bool cmp(int first, int second)
-{
-    if (first == 1 || second == 1)
-    {
-        if (first == 1)
-            return true;
-        return false;
-    }
-    if (first == 2 || second == 2)
-    {
-        if (first == 2)
-        {
-            if (second >= 5)
-                return false;
-            return true;
-        }
-        if (first >= 5)
-            return true;
-        return false;
-    }
-    return first > second;
-}
 int32_t main()
 {
     fastio();
@@ -153,18 +131,31 @@ int32_t main()
 
     while (t--)
     {
-        int n;
-        cin >> n;
+        int row, col;
+        cin >> row >> col;
 
-        vector<int> v(n);
-
-        for (int i = 0; i < n; i++)
-            cin >> v[i];
-
-        sort(v.begin(), v.end(), cmp);
-
-        for (int i = 0; i < n; i++)
-            cout << v[i] << " ";
+        if (col >= row)
+        {
+            if (col & 1)
+            {
+                cout << (col * col) + 1 - row;
+            }
+            else
+            {
+                cout << (col - 1) * (col - 1) + row;
+            }
+        }
+        else
+        {
+            if (row & 1)
+            {
+                cout << (row - 1) * (row - 1) + col;
+            }
+            else
+            {
+                cout << (row * row) + 1 - col;
+            }
+        }
         cout << endl;
     }
 }

@@ -116,27 +116,13 @@ public:
         }
     }
 };
-bool cmp(int first, int second)
+bool f(int x, int n)
 {
-    if (first == 1 || second == 1)
-    {
-        if (first == 1)
-            return true;
-        return false;
-    }
-    if (first == 2 || second == 2)
-    {
-        if (first == 2)
-        {
-            if (second >= 5)
-                return false;
-            return true;
-        }
-        if (first >= 5)
-            return true;
-        return false;
-    }
-    return first > second;
+    if (x >= n)
+        return true;
+    int val = x * (x - 1);
+
+    return val >= n;
 }
 int32_t main()
 {
@@ -156,15 +142,22 @@ int32_t main()
         int n;
         cin >> n;
 
-        vector<int> v(n);
+        int low = 1, high = 1e18;
+        int ans = 0;
+        while (low < high)
+        {
+            int mid = low + (high - low) / 2;
+            if (f(mid, n))
+            {
+                high = mid;
+                ans = mid;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
 
-        for (int i = 0; i < n; i++)
-            cin >> v[i];
-
-        sort(v.begin(), v.end(), cmp);
-
-        for (int i = 0; i < n; i++)
-            cout << v[i] << " ";
-        cout << endl;
+        cout << ans << endl;
     }
 }
