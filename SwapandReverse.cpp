@@ -133,35 +133,9 @@ int32_t main()
     {
         int n, k;
         cin >> n >> k;
-        vector<int> rem_count(k);
-
-        for (int i = 0; i < n; i++)
-        {
-            int num;
-            cin >> num;
-
-            rem_count[num % k]++;
-            cout << num % k << endl;
-        }
-        // 4   1 : 3, 2 : 2, 0 : 0
-
-        int ans = rem_count[0] / 2;
-        for (int i = 1; i <= k / 2; i++)
-        {
-            int n = k - i;
-            if (i != n)
-            {
-                int t = min(rem_count[n], rem_count[i]);
-                ans += t;
-            }
-            else
-            {
-                int t = rem_count[n];
-                ans += t / 2;
-            }
-            cout << ans << " " << i << endl;
-        }
-
-        cout << ans * 2 << endl;
+        string s;
+        cin >> s;
+        sort(s.begin(), s.end());
+        cout << s << endl;
     }
 }

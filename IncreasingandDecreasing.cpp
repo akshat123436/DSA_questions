@@ -131,37 +131,38 @@ int32_t main()
 
     while (t--)
     {
-        int n, k;
-        cin >> n >> k;
-        vector<int> rem_count(k);
+        int x, y, n;
+        cin >> x >> y >> n;
 
-        for (int i = 0; i < n; i++)
+        vector<int> arr;
+        arr.push_back(y);
+        int last = y;
+        bool pos = true;
+        for (int i = 1; i <= n - 2; i++)
         {
-            int num;
-            cin >> num;
-
-            rem_count[num % k]++;
-            cout << num % k << endl;
+            int num = last - i;
+            if (num <= x)
+            {
+                pos = false;
+                break;
+            }
+            last = num;
+            arr.push_back(num);
         }
-        // 4   1 : 3, 2 : 2, 0 : 0
-
-        int ans = rem_count[0] / 2;
-        for (int i = 1; i <= k / 2; i++)
+        if (last - x <= n - 2)
         {
-            int n = k - i;
-            if (i != n)
-            {
-                int t = min(rem_count[n], rem_count[i]);
-                ans += t;
-            }
-            else
-            {
-                int t = rem_count[n];
-                ans += t / 2;
-            }
-            cout << ans << " " << i << endl;
+            // cout << y << " " << *arr.rbegin() << n - 2 << endl;
+            pos = false;
         }
-
-        cout << ans * 2 << endl;
+        arr.push_back(x);
+        reverse(arr.begin(), arr.end());
+        if (pos)
+        {
+            for (auto a : arr)
+                cout << a << " ";
+        }
+        else
+            cout << -1;
+        cout << endl;
     }
 }

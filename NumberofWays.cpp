@@ -127,41 +127,57 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, k;
-        cin >> n >> k;
-        vector<int> rem_count(k);
+        int n;
+        cin >> n;
+        vector<int> arr(n);
 
+        int sum = 0;
         for (int i = 0; i < n; i++)
         {
-            int num;
-            cin >> num;
-
-            rem_count[num % k]++;
-            cout << num % k << endl;
+            cin >> arr[i];
+            sum += arr[i];
         }
-        // 4   1 : 3, 2 : 2, 0 : 0
 
-        int ans = rem_count[0] / 2;
-        for (int i = 1; i <= k / 2; i++)
+        if (sum % 3 != 0)
         {
-            int n = k - i;
-            if (i != n)
-            {
-                int t = min(rem_count[n], rem_count[i]);
-                ans += t;
-            }
-            else
-            {
-                int t = rem_count[n];
-                ans += t / 2;
-            }
-            cout << ans << " " << i << endl;
+            cout << 0 << endl;
         }
+        else
+        {
+            int ans = 0;
+            vector<int> count(n), arr2 = arr;
+            for (int i = n - 2; i >= 0; i--)
+            {
+                arr2[i] += arr2[i + 1];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (arr2[i] == sum / 3)
+                    count[i] = 1;
+            }
 
-        cout << ans * 2 << endl;
+            for (int i = n - 2; i >= 0; i--)
+            {
+                count[i] += count[i + 1];
+            }
+
+            for (int i = 1; i < n; i++)
+            {
+                arr[i] += arr[i - 1];
+            }
+
+            for (int i = 0; i < n - 2; i++)
+            {
+                if (arr[i] == sum / 3)
+                {
+                    ans += count[i + 2];
+                }
+            }
+            cout << ans << endl;
+        }
     }
 }

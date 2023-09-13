@@ -116,6 +116,29 @@ public:
         }
     }
 };
+
+void dfs(int node, int minDistance, vector<int> &endDis, vector<int> &path, int curValue, vector<int> &curPath, int n, vector<vector<pair<int, int>>> &graph)
+{
+    if (path.size())
+        return;
+    if (node == n)
+    {
+        path = curPath;
+        return;
+    }
+    for (auto a : graph[node])
+    {
+        if (path.size())
+            break;
+        int dis = minDistance - endDis[a.first];
+        if (dis == a.second + curValue)
+        {
+            curPath.push_back(a.first);
+            dfs(a.first, minDistance, endDis, path, dis, curPath, n, graph);
+        }
+    }
+}
+
 int32_t main()
 {
     fastio();
@@ -127,41 +150,63 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, k;
-        cin >> n >> k;
-        vector<int> rem_count(k);
+        int n, m;
+        cin >> n >> m;
 
-        for (int i = 0; i < n; i++)
+        vector<vector<pair<int, int>>> graph(n + 1);
+        for (int i = 0; i < m; i++)
         {
-            int num;
-            cin >> num;
+            int a, b, w;
+            cin >> a >> b >> w;
 
-            rem_count[num % k]++;
-            cout << num % k << endl;
-        }
-        // 4   1 : 3, 2 : 2, 0 : 0
-
-        int ans = rem_count[0] / 2;
-        for (int i = 1; i <= k / 2; i++)
-        {
-            int n = k - i;
-            if (i != n)
-            {
-                int t = min(rem_count[n], rem_count[i]);
-                ans += t;
-            }
-            else
-            {
-                int t = rem_count[n];
-                ans += t / 2;
-            }
-            cout << ans << " " << i << endl;
+            graph[a].push_back({b, w});
+            graph[b].push_back({a, w});
         }
 
-        cout << ans * 2 << endl;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+        vector<int> endDis(n + 1, 1e11);
+        endDis[n] = 0;
+        pq.push({0, n});
+
+        while (!pq.empty())
+        {
+            auto topOne = pq.top();
+            int node = topOne.second;
+            int cur = topOne.first;
+            pq.pop();
+
+            for (auto a : graph[node])
+            {
+
+                int dis = cur + a.second;
+                // cout << dis << " " << cur << " " << a.first << " " << a.second << " " << node << endl;
+                if (dis < endDis[a.first])
+                {
+                    endDis[a.first] = dis;
+                    pq.push({dis, a.first});
+                }
+            }
+        }
+
+        int minDistance = endDis[1];
+
+        vector<int> path;
+        vector<int> cur;
+        if (endDis[1] != 1e11)
+        {
+            // cout << minDistance << endl;
+            dfs(1, minDistance, endDis, path, 0, cur, n, graph);
+            cout << 1 << " ";
+            for (auto a : path)
+                cout << a << " ";
+            cout << endl;
+        }
+        else
+            cout << -1 << endl;
     }
 }

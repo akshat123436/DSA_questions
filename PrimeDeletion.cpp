@@ -131,37 +131,23 @@ int32_t main()
 
     while (t--)
     {
-        int n, k;
-        cin >> n >> k;
-        vector<int> rem_count(k);
-
-        for (int i = 0; i < n; i++)
+        string s;
+        cin >> s;
+        bool thr = false;
+        for (int i = 0; i < s.size(); i++)
         {
-            int num;
-            cin >> num;
-
-            rem_count[num % k]++;
-            cout << num % k << endl;
-        }
-        // 4   1 : 3, 2 : 2, 0 : 0
-
-        int ans = rem_count[0] / 2;
-        for (int i = 1; i <= k / 2; i++)
-        {
-            int n = k - i;
-            if (i != n)
+            if (s[i] == '7')
+                break;
+            else if (s[i] == '3')
             {
-                int t = min(rem_count[n], rem_count[i]);
-                ans += t;
+                thr = true;
+                break;
             }
-            else
-            {
-                int t = rem_count[n];
-                ans += t / 2;
-            }
-            cout << ans << " " << i << endl;
         }
 
-        cout << ans * 2 << endl;
+        if (thr)
+            cout << "37" << endl;
+        else
+            cout << "73" << endl;
     }
 }
