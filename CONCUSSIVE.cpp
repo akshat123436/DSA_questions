@@ -131,27 +131,86 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
-        {
+        int n;
+        cin >> n;
+        int arr[n];
+
+        for (int i = 0; i < n; i++)
             cin >> arr[i];
-        }
 
-        if (arr[0] != 1)
-            ans++;
+        sort(arr, arr + n);
 
-        int left = 1;
+        vector<int> first, second;
 
-        for (int i = 0; i < m; i++)
+        int ptr1 = 0, ptr2 = n - 1;
+
+        while (ptr1 < ptr2)
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
+            first.push_back(arr[ptr1]);
+            first.push_back(arr[ptr2]);
+            ptr1++;
+            ptr2--;
         }
 
-        ans += (n - arr[m - 1] - 1) / d;
+        if (ptr1 == ptr2)
+            first.push_back(arr[ptr1]);
+
+        ptr1 = 0, ptr2 = n - 1;
+
+        while (ptr1 < ptr2)
+        {
+            second.push_back(arr[ptr2]);
+            second.push_back(arr[ptr1]);
+            ptr1++;
+            ptr2--;
+        }
+
+        if (ptr1 == ptr2)
+            second.push_back(arr[ptr1]);
+
+        bool pos = true;
+
+        for (int i = 1; i < n - 1; i++)
+        {
+            if ((first[i] > first[i - 1] && first[i] > first[i + 1]) || (first[i] < first[i - 1] && first[i] < first[i + 1]))
+            {
+            }
+            else
+            {
+                pos = false;
+                break;
+            }
+        }
+        if (pos)
+        {
+            for (auto a : first)
+            {
+                cout << a << " ";
+            }
+            cout << endl;
+            continue;
+        }
+        pos = true;
+        for (int i = 1; i < n - 1; i++)
+        {
+            if ((second[i] > second[i - 1] && second[i] > second[i + 1]) || (second[i] < second[i - 1] && second[i] < second[i + 1]))
+            {
+            }
+            else
+            {
+                pos = false;
+                break;
+            }
+        }
+        if (pos)
+        {
+            for (auto a : second)
+            {
+                cout << a << " ";
+            }
+            cout << endl;
+            continue;
+        }
+        cout << -1 << endl;
     }
 }

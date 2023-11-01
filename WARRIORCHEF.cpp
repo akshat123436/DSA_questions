@@ -116,6 +116,26 @@ public:
         }
     }
 };
+
+bool isPossible(int health, vector<int> &arr, int x, int n)
+{
+    if (health <= 0)
+        return false;
+    for (int i = 0; i < n; i++)
+    {
+        if (x < arr[i])
+        {
+            health -= arr[i];
+        }
+
+        if (health <= 0)
+            return false;
+    }
+    if (health <= 0)
+        return false;
+    return true;
+}
+
 int32_t main()
 {
     fastio();
@@ -131,27 +151,33 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        int n, h;
+        cin >> n >> h;
+        vector<int> arr(n);
+        int low = 0, high = -1e9;
+
+        for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
+            high = max(high, arr[i]);
         }
 
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
+        while (high - low > 1)
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
+            int mid = low + (high - low) / 2;
+            if (isPossible(h, arr, mid, n))
+            {
+                high = mid;
+            }
+            else
+            {
+                low = mid + 1;
+            }
         }
 
-        ans += (n - arr[m - 1] - 1) / d;
+        if (isPossible(h, arr, low, n))
+            cout << low << endl;
+        else
+            cout << high << endl;
     }
 }

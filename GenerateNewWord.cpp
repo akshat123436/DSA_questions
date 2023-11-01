@@ -116,6 +116,26 @@ public:
         }
     }
 };
+void sorter(string &s, map<int, char> &order)
+{
+    unordered_map<char, int> count;
+    string temp;
+    for (auto a : s)
+        count[a]++;
+
+    for (auto &a : order)
+    {
+        // cout << a.first << " " << a.second << endl;
+        int t = count[a.second];
+        while (t)
+        {
+            temp.push_back(a.second);
+            t--;
+        }
+    }
+    // cout << temp << endl;
+    s = temp;
+}
 int32_t main()
 {
     fastio();
@@ -127,31 +147,66 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        string dict, inputString;
+        getline(cin, dict);
+        getline(cin, inputString);
+        transform(dict.begin(), dict.end(), dict.begin(), ::tolower);
+        transform(inputString.begin(), inputString.end(), inputString.begin(), ::tolower);
+        map<int, char> order;
+        int index = 1;
+        bool check = false;
+        unordered_map<char, bool> isPresent;
+        for (auto a : dict)
         {
-            cin >> arr[i];
+            // cout << order[index] << endl;
+            if (isPresent[a])
+            {
+                check = true;
+                break;
+            }
+            order[index] = a;
+            index++;
+            isPresent[a] = true;
         }
-
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
+        vector<string> ans;
+        if (check)
+            cout << "New language Error" << endl;
+        else
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
+            string temp;
 
-        ans += (n - arr[m - 1] - 1) / d;
+            for (auto a : inputString)
+            {
+                if (a == ' ')
+                {
+                    // cout << temp << endl;
+                    sorter(temp, order);
+                    ans.push_back(temp);
+                    temp = "";
+                }
+                else
+                {
+                    if (isPresent[a])
+                        temp.push_back(a);
+                }
+            }
+
+            if (temp != "")
+            {
+                // cout << temp << endl;
+                sorter(temp, order);
+                ans.push_back(temp);
+                temp = "";
+            }
+            for (auto &a : ans)
+            {
+                cout << a << " ";
+            }
+            cout << endl;
+        }
     }
 }

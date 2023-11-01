@@ -116,6 +116,19 @@ public:
         }
     }
 };
+int f(int n, vector<int> &dp)
+{
+    if (n < 0)
+        return 0;
+    if (dp[n] != -1)
+        return dp[n];
+    int ways = 0;
+    for (int i = 1; i <= 6; i++)
+    {
+        ways = (ways % MOD + f(n - i, dp) % MOD) % MOD;
+    }
+    return dp[n] = ways % MOD;
+}
 int32_t main()
 {
     fastio();
@@ -127,31 +140,16 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
-        {
-            cin >> arr[i];
-        }
+        int n;
+        cin >> n;
 
-        if (arr[0] != 1)
-            ans++;
+        vector<int> dp(n + 1, -1);
+        dp[0] = 1, dp[1] = 1;
 
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
-        {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
-
-        ans += (n - arr[m - 1] - 1) / d;
+        cout << f(n, dp) << endl;
     }
 }

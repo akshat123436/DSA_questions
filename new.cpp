@@ -1,3 +1,22 @@
+// [1, 2, 3]
+// //out
+
+// [1, 2, 4]
+
+// //input
+// [4, 1, 2, 1]
+
+// //out
+// [4, 1, 2, 2]
+
+// //input
+// [1, 9]
+
+// //output
+// [2, 0]
+
+// [1, 0]
+
 /*------------------Instant success builds ego, long term success builds character.---------------*/
 #include <bits/stdc++.h>
 
@@ -127,31 +146,73 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        // [1, 2, 3]
+        // //out
+
+        // [1, 2, 4]
+
+        // //input
+        // [4, 1, 2, 1]
+
+        // //out
+        // [4, 1, 2, 2]
+
+        // //input
+        // [1, 9]
+
+        // //output
+        // [2, 0]
+
+        // [1, 0]
+        string s;
+        // cin >> s;
+        getline(cin, s);
+
+        string temp;
+
+        for (auto &a : s)
         {
-            cin >> arr[i];
+            // cout << a << endl;
+            if (a >= '0' && a <= '9')
+            {
+                temp.push_back(a);
+            }
+        }
+        // cout << temp << endl;
+        string result;
+        bool carry = true;
+        for (int i = temp.size() - 1; i >= 0; i--)
+        {
+            char digit = temp[i];
+            if (carry && digit != '9')
+            {
+                digit++;
+                carry = false;
+            }
+            else if (carry)
+            {
+                digit = '0';
+            }
+            result.push_back(digit);
+        }
+        if (carry)
+            result.push_back('1');
+        // cout << result << endl;
+        int check = result.size() - 1;
+        string ans = "[";
+        while (check >= 0)
+        {
+            ans.push_back(result[check]);
+            ans.push_back(',');
+            check--;
         }
 
-        if (arr[0] != 1)
-            ans++;
+        ans[ans.size() - 1] = ']';
 
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
-        {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
-
-        ans += (n - arr[m - 1] - 1) / d;
+        cout << ans << endl;
     }
 }

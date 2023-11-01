@@ -116,6 +116,41 @@ public:
         }
     }
 };
+
+int f(int i, int rem, vector<int> &v, vector<vector<int>> &dp)
+{
+    if (i == v.size())
+    {
+        if (rem)
+            return -1;
+        return 0;
+    };
+    if (!rem)
+        return 0;
+    if (dp[i][rem] != -1)
+        return dp[i][rem];
+    int coinsRequired = -1;
+    int m = 0;
+
+    while (v[i] * m <= rem)
+    {
+
+        int t = f(i + 1, rem - (v[i] * m), v, dp);
+        // cout << v[i] << " " << m << " " << rem << " " << t << endl;
+        if (t != -1)
+        {
+            if (coinsRequired == -1)
+                coinsRequired = m + t;
+            else
+            {
+                coinsRequired = min(coinsRequired, m + t);
+            }
+        }
+        m++;
+    }
+    return dp[i][rem] = coinsRequired;
+}
+
 int32_t main()
 {
     fastio();
@@ -127,31 +162,19 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
-        {
-            cin >> arr[i];
-        }
+        int n, x;
+        cin >> n >> x;
+        vector<int> v(n);
 
-        if (arr[0] != 1)
-            ans++;
+        for (int i = 0; i < n; i++)
+            cin >> v[i];
 
-        int left = 1;
+        vector<vector<int>> dp(n, vector<int>(x + 1, -1));
 
-        for (int i = 0; i < m; i++)
-        {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
-
-        ans += (n - arr[m - 1] - 1) / d;
+        cout << f(0, x, v, dp) << endl;
     }
 }

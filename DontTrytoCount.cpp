@@ -131,27 +131,26 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        int n, m;
+        cin >> n >> m;
+
+        string first, second;
+        cin >> first >> second;
+
+        while (first.length() < second.length())
         {
-            cin >> arr[i];
+            first += first;
         }
 
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
+        first += first;
+        int ans = -1;
+        for (int i = 0; i < first.length() - m; i++)
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
+            string temp = first.substr(i, m);
 
-        ans += (n - arr[m - 1] - 1) / d;
+            if (temp == second)
+            {
+            }
+        }
     }
 }

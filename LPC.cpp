@@ -116,6 +116,24 @@ public:
         }
     }
 };
+
+int findMoves(int i, string &n, string &m, int len)
+{
+    int diff = 0;
+
+    for (int j = 0; j < len; j++)
+    {
+        int check = abs((n[i] - '0') - (m[j] - '0'));
+        check = min(check, abs((int)(10 - (n[i] - '0') + (m[j] - '0'))));
+        check = min(check, abs((int)((n[i] - '0') + 10 - (m[j] - '0'))));
+        // cout << check << n[i] << " " << m[j] << ' ' << i << endl;
+        diff += check;
+        i++;
+    }
+
+    return diff;
+}
+
 int32_t main()
 {
     fastio();
@@ -131,27 +149,20 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        int t, g;
+        cin >> t >> g;
+        string n, m;
+        cin >> n >> m;
+        int nLength = n.length();
+        int minLength = m.length();
+        int ans = 1e9;
+        for (int i = 0; i < nLength - minLength + 1; i++)
         {
-            cin >> arr[i];
+            int moves = findMoves(i, n, m, minLength);
+
+            ans = min(ans, moves);
         }
 
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
-        {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
-        }
-
-        ans += (n - arr[m - 1] - 1) / d;
+        cout << ans << endl;
     }
 }

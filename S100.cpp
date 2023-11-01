@@ -131,27 +131,26 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        int index = -1;
+        for (int i = 0; i < n - 2; i++)
         {
-            cin >> arr[i];
+            if (s[i] == '1')
+            {
+                index = i;
+                break;
+            }
         }
-
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
+        if (index == -1)
+            cout << s << endl;
+        else
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
+            for (int i = index + 1; i < n; i++)
+                s[i] = '0';
+            cout << s << endl;
         }
-
-        ans += (n - arr[m - 1] - 1) / d;
     }
 }

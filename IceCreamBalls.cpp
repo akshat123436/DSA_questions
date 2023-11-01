@@ -116,13 +116,16 @@ public:
         }
     }
 };
-bool f(int x, int n)
+int f(int x, int n)
 {
-    if (x >= n)
-        return true;
     int val = x * (x - 1);
 
-    return val >= n;
+    if (val == n)
+        return 1;
+    else if (val > n)
+        return 2;
+    else
+        return 0;
 }
 int32_t main()
 {
@@ -142,15 +145,21 @@ int32_t main()
         int n;
         cin >> n;
 
-        int low = 1, high = 1e18;
+        int low = 1, high = 1e9 + 2;
         int ans = 0;
+        int ans2 = 0;
         while (low < high)
         {
             int mid = low + (high - low) / 2;
-            if (f(mid, n))
+            if (f(mid, n) == 1)
+            {
+                ans = mid;
+                break;
+            }
+            else if (f(mid, n) == 2)
             {
                 high = mid;
-                ans = mid;
+                ans2 = mid;
             }
             else
             {

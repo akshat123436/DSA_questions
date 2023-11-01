@@ -53,6 +53,56 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}*/
+// C++ function for extended Euclidean Algorithm
+int gcdExtended(int a, int b, int *x, int *y);
+
+// Function to find modulo inverse of b. It returns
+// -1 when inverse doesn't
+int modInverse(int b, int m)
+{
+    int x, y; // used in extended GCD algorithm
+    int g = gcdExtended(b, m, &x, &y);
+
+    // Return -1 if b and m are not co-prime
+    if (g != 1)
+        return -1;
+
+    // m is added to handle negative x
+    return (x % m + m) % m;
+}
+
+// Function to compute a/b under modulo m
+void modDivide(int a, int b, int m)
+{
+    a = a % m;
+    int inv = modInverse(b, m);
+    if (inv == -1)
+        cout << "Division not defined";
+    else
+        cout << "Result of division is " << (inv * a) % m;
+}
+
+// C function for extended Euclidean Algorithm (used to
+// find modular inverse.
+int gcdExtended(int a, int b, int *x, int *y)
+{
+    // Base Case
+    if (a == 0)
+    {
+        *x = 0, *y = 1;
+        return b;
+    }
+
+    int x1, y1; // To store results of recursive call
+    int gcd = gcdExtended(b % a, a, &x1, &y1);
+
+    // Update x and y using results of recursive
+    // call
+    *x = y1 - (b / a) * x1;
+    *y = x1;
+
+    return gcd;
+}
 class DisjointSet
 {
     vector<int> rank, parent, size;
@@ -131,27 +181,38 @@ int32_t main()
 
     while (t--)
     {
-        int n, m, d;
-        cin >> n >> m >> d;
-        int arr[m];
-        int ans = m;
-        for (int i = 0; i < m; i++)
+        int n;
+        cin >> n;
+        vector<int> arr(n);
+        int sum = 0;
+        for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
+            sum += arr[i];
         }
-
-        if (arr[0] != 1)
-            ans++;
-
-        int left = 1;
-
-        for (int i = 0; i < m; i++)
+        if (sum % n)
         {
-            int val = arr[i] - left - 1;
-            left = arr[i];
-            ans += val / d;
+            cout << "NO" << endl;
         }
+        else
+        {
+            int avg = sum / n;
+            bool check = true;
+            for (int i = 0; i < n; i++)
+            {
+                int diff = avg - arr[i];
 
-        ans += (n - arr[m - 1] - 1) / d;
+                if (diff % 2)
+                {
+                    check = false;
+                    break;
+                }
+            }
+
+            if (check)
+                cout << "YES" << endl;
+            else
+                cout << "NO" << endl;
+        }
     }
 }
