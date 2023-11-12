@@ -1,27 +1,27 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <cmath>
 
 using namespace std;
 
 int main()
 {
-    double a, b;
-    cout << "Enter a and b : ";
-    cin >> a >> b;
-    double t = 0;
-    if (a < b && a < 10)
-    {
-        t = a * a + a * b + sqrt(a * b);
+    int n;
+    vector<vector<int>> edges;
+
+    cin >> n;
+
+    vector<int> indegree(n);
+
+    for(auto &a : edges){
+        indegree[a[1]]++;
     }
-    else if (a == b || b > 10)
-    {
-        t = a * b * b - 2 * a + 5 * b;
+    int ans = -1;
+    for(int i = 0;i<n;i++){
+        if(indegree[i] == 0){
+            if(ans == -1) ans = i;
+            else return -1;
+        }
     }
-    else
-    {
-        cout << "No conditions met" << endl;
-        return 0;
-    }
-    cout << t << endl;
-    return 0;
+
+    return ans;
 }
