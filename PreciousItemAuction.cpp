@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,45 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, k;
+        cin >> n >> k;
+
+        vector<int> arr(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+
+        sort(arr.begin(), arr.end());
+        int maximum = 0;
+
+        int c = 0;
+        int j = n - 2;
+        while (c < k)
+        {
+            maximum += arr[j];
+            j -= 2;
+            c++;
+        }
+
+        int minimum = 0;
+        if (n == 2 * k)
+        {
+            for (int i = 0; i < n / 2; i++)
+            {
+                minimum += arr[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < k - 1; i++)
+            {
+                minimum += arr[i];
+            }
+
+            minimum += arr[n - k - 1];
+        }
+        cout << minimum << " " << maximum << endl;
     }
 }

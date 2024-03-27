@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,30 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, k;
+        cin >> n >> k;
+
+        int p = 1;
+
+        for (int i = 0; i < n; i++)
+        {
+            int temp;
+            cin >> temp;
+            p *= temp;
+        }
+
+        if (2023 % p)
+            cout << "NO" << endl;
+        else
+        {
+            cout << "YES" << endl;
+            cout << 2023 / p << " ";
+
+            for (int i = 1; i < k; i++)
+            {
+                cout << 1 << " ";
+            }
+            cout << endl;
+        }
     }
 }

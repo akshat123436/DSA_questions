@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,42 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, r, c;
+        cin >> n >> r >> c;
+        vector<vector<int>> count(r, vector<int>(c, 0));
+        for (int i = 0; i < n; i++)
+        {
+            int rowNumber;
+            cin >> rowNumber;
+
+            for (int j = 0; j < r; j++)
+            {
+                string s;
+                cin >> s;
+
+                for (int k = 0; k < c; k++)
+                {
+                    if (s[k] == '*')
+                    {
+                        count[j][k]++;
+                    }
+                }
+            }
+        }
+
+        int planet = 0, star = 0;
+
+        for (int i = 0; i < r; i++)
+        {
+            for (int j = 0; j < c; j++)
+            {
+                if (count[i][j] == n)
+                    planet++;
+                else if (count[i][j])
+                    star++;
+            }
+        }
+
+        cout << planet << " " << star << endl;
     }
 }

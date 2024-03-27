@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,9 +166,68 @@ public:
         }
     }
 };
+
+int countPairs(vector<int> &projectCosts, int target)
+{
+    cout << 1 << endl;
+    map<int, int> count;
+
+    int ans = 0;
+    set<int> s;
+    for (auto &a : projectCosts)
+    {
+        s.insert(a);
+        count[a]++;
+    }
+
+    for (auto &a : s)
+    {
+        ans += count[a + target];
+    }
+    return ans;
+}
+
+int minPartitions(vector<int> &used, vector<int> &totalCapacity)
+{
+    long long sum = 0;
+
+    for (auto &a : used)
+    {
+        sum += a;
+    }
+
+    sort(totalCapacity.begin(), totalCapacity.end());
+    int n = totalCapacity.size();
+    int ans = 0;
+    for (int i = n - 1; i >= 0 && sum > 0; i--)
+    {
+        sum -= totalCapacity[i];
+        ans++;
+    }
+
+    return ans;
+}
+
+string breakPalindrome(string palindromeStr)
+{
+    int n = palindromeStr.length();
+    for (int i = 0; i < n; i++)
+    {
+        if ((n & 1) && i == n / 2)
+            continue;
+        if (palindromeStr[i] != 'a')
+        {
+            palindromeStr[i] = 'a';
+            return palindromeStr;
+        }
+    }
+
+    return "IMPOSSIBLE";
+}
+
 int32_t main()
 {
-    fastio();
+    // fastio();
 #ifndef ONLINE_JUDGE
 
     freopen("Error.txt", "w", stderr);
@@ -180,10 +236,11 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        vector<int> used = {3, 2, 1, 3, 1}, totalCapacity = {3, 5, 3, 5, 5};
+        cout << breakPalindrome("aaabaaa");
     }
 }

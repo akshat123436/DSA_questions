@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -180,10 +177,36 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        vector<int> ps(n);
+        ps[0] = s[0] - '0';
+        for (int i = 1; i < n; i++)
+        {
+            ps[i] = (s[i] - '0') + ps[i - 1];
+        }
+        int maxLen = 0;
+        for (int len = 2; len <= n; len += 2)
+        {
+            for (int i = 0; i + len <= n; i++)
+            {
+                int leftSum = 0, rightSum = 0;
+                if (i)
+                    leftSum = ps[i + len / 2 - 1] - ps[i - 1];
+                else
+                    leftSum = ps[i + len / 2 - 1];
+                rightSum = ps[i + len - 1] - ps[len / 2 - 1];
+                if (leftSum == rightSum)
+                    maxLen = len;
+            }
+        }
+
+        cout << maxLen << endl;
     }
 }

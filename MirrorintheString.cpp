@@ -1,3 +1,5 @@
+
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -34,24 +36,24 @@ typedef long double lld;
 #define debug(x)
 #endif
 
-//void _print(ll t) {cerr << t;}
+// void _print(ll t) {cerr << t;}
 ////void _print(int t) {cerr << t;}
-//void _print(string t) {cerr << t;}
-//void _print(char t) {cerr << t;}
-//void _print(lld t) {cerr << t;}
-//void _print(double t) {cerr << t;}
-//void _print(ull t) {cerr << t;}
+// void _print(string t) {cerr << t;}
+// void _print(char t) {cerr << t;}
+// void _print(lld t) {cerr << t;}
+// void _print(double t) {cerr << t;}
+// void _print(ull t) {cerr << t;}
 
-//template <class T, class V> void _print(pair <T, V> p);
-//template <class T> void _print(vector <T> v);
-//template <class T> void _print(set <T> v);
-//template <class T, class V> void _print(map <T, V> v);
-//template <class T> void _print(multiset <T> v);
-//template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
-//template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-//template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-//template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-//template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+// template <class T, class V> void _print(pair <T, V> p);
+// template <class T> void _print(vector <T> v);
+// template <class T> void _print(set <T> v);
+// template <class T, class V> void _print(map <T, V> v);
+// template <class T> void _print(multiset <T> v);
+// template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
+// template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+// template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -110,15 +112,21 @@ int32_t main()
         cin >> s;
         string ans;
         char greatest = s[0];
-        for(int i = 0;i<s.size();i++){
+        for (int i = 0; i < s.size(); i++)
+        {
             ans.push_back(s[i]);
-            if(s[i] < s[i+1] && (i != s.size()-1)) break;
-            else if(s[i] == s[i+1]) {
-                if(s[i] >= greatest) break;
+            if (s[i] < s[i + 1] && (i != s.size() - 1))
+                break;
+            else if (s[i] == s[i + 1])
+            {
+                if (s[i] >= greatest)
+                    break;
             }
-            if(s[i] > greatest) greatest = s[i];
+            if (s[i] > greatest)
+                greatest = s[i];
         }
-        for(int i = ans.size() - 1;i>=0;i--){
+        for (int i = ans.size() - 1; i >= 0; i--)
+        {
             ans.push_back(ans[i]);
         }
 

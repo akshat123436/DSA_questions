@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,42 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, k;
+        cin >> n >> k;
+
+        string s;
+        cin >> s;
+
+        bool clock = true;
+        int cur = 1;
+        for (auto &turn : s)
+        {
+            int move = 0;
+
+            if (turn == 'R')
+            {
+                clock = !clock;
+                move = 1;
+            }
+            if (turn == 'U')
+            {
+                move = 1;
+            }
+            else if (turn == 'S')
+            {
+                move = 2;
+            }
+            if (!clock)
+            {
+                move = -move;
+            }
+            cur += move;
+            if (cur <= 0)
+                cur += n;
+            if (cur > n)
+                cur = cur % n;
+        }
+
+        cout << cur << endl;
     }
 }

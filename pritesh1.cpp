@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,38 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        vector<int> v(n);
+        long long mod = 1e9 + 7;
+        for (int i = 0; i < n; i++)
+            cin >> v[i];
+
+        vector<int> b;
+
+        for (int i = 0; i < n; i++)
+        {
+            if (i == 0)
+            {
+                b.push_back(abs(v[n - 1] - v[1]));
+            }
+            else if (i == n - 1)
+            {
+                b.push_back(abs(v[n - 2] - v[0]));
+            }
+            else
+            {
+                b.push_back(abs(v[i - 1] - v[i + 1]));
+            }
+        }
+
+        int ans = 0;
+
+        for (int i = 0; i < b.size(); i++)
+        {
+            ans += b[i] ^ i;
+        }
+
+        cout << (ans % mod) << endl;
     }
 }

@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,26 @@ public:
         }
     }
 };
+
+int f(int i, int n, string &s, vector<int> &dp, set<int> &ind)
+{
+    // cout << i << endl;
+    if (i == n)
+        return 1;
+    if (i >= n - 1)
+        return 0;
+    if (dp[i] != -1)
+        return dp[i];
+
+    // cout << i << endl;
+    bool temp = ((s[i] != 'a' && s[i] != 'e') && (s[i + 1] == 'a' || s[i + 1] == 'e') ? f(i + 2, n, s, dp, ind) == 1 : false) || (i < n - 2 && ((s[i] != 'a' && s[i] != 'e') && (s[i + 1] == 'a' || s[i + 1] == 'e') && (s[i + 2] != 'a' && s[i + 2] != 'e')) ? f(i + 3, n, s, dp, ind) == 1 : false);
+    if (temp)
+    {
+        ind.insert(i);
+        return dp[i] = 1;
+    }
+    return dp[i] = 0;
+}
 int32_t main()
 {
     fastio();
@@ -184,6 +201,28 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+
+        vector<int> dp(n, -1);
+
+        set<int> ind;
+
+        f(0, n, s, dp, ind);
+        string ans;
+        // for (auto &a : ind)
+        //     cout << a << endl;
+        for (int i = 0; i < n; i++)
+        {
+
+            if (i > 1 && ind.count(i))
+            {
+                ans.push_back('.');
+            }
+            ans.push_back(s[i]);
+        }
+        cout << ans << endl;
     }
 }

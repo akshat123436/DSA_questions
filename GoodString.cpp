@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -180,10 +177,62 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        string good, normal;
+        getline(cin, good);
+        getline(cin, normal);
+        // cin >> good >> normal;
+
+        int prev = (int)good[0];
+        int ans = 0;
+        for (auto &a : normal)
+        {
+            int cur = (int)a;
+
+            int diff = 1000;
+            int currentPick = 1000;
+            bool check = false;
+            int reserve = 0;
+            for (auto &b : good)
+            {
+                int temp = abs(((int)b) - cur);
+
+                if (temp < diff)
+                {
+                    check = false;
+                    diff = temp;
+                    // prev = (int)b;
+                    currentPick = (int)b;
+                }
+                else if (temp == diff)
+                {
+                    check = true;
+                    if (abs(currentPick - prev) < abs(((int)b) - prev))
+                    {
+                        reserve = abs(currentPick - prev);
+                    }
+
+                    else
+                    {
+                        reserve = abs(((int)b) - prev);
+                        currentPick = (int)b;
+                    }
+                }
+            }
+            // cout << (char)prev << " " << (char)currentPick << endl;
+            if (check)
+            {
+                diff = reserve;
+            }
+            if (diff)
+                prev = currentPick;
+            ans += diff;
+            // cout << ans << endl;
+        }
+
+        cout << ans << endl;
     }
 }

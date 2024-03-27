@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,20 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        vector<int> v(n);
+        bool special = true;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> v[i];
+            if (i && (v[i] & 1) == (v[i - 1] & 1))
+                special = false;
+        }
+
+        if (special)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
 }

@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,27 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, m;
+        cin >> n >> m;
+
+        vector<int> a(n), b(n), withVal(n), withoutVal(n);
+
+        for (int i = 0; i < n; i++)
+            cin >> a[i];
+        for (int i = 0; i < n; i++)
+            cin >> b[i];
+
+        withVal[n - 1] = a[n - 1];
+        withoutVal[n - 1] = b[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+        {
+            withVal[i] = a[i] + min(withVal[i + 1], withoutVal[i + 1]);
+            withoutVal[i] = b[i] + min(withVal[i + 1], withoutVal[i + 1]);
+        }
+        int ans = withVal[0];
+        for (int i = 0; i < m; i++)
+            ans = min(ans, withVal[i]);
+
+        cout << ans << endl;
     }
 }

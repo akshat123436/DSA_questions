@@ -184,6 +184,36 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        int minValue = 1e10, minSecondValue = 1e10, sum = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            int k;
+            cin >> k;
+            int mini = 1e10;
+            int secondMini = 1e10;
+            for (int i = 0; i < k; i++)
+            {
+                int temp;
+                cin >> temp;
+                if (temp < mini)
+                {
+                    secondMini = mini;
+                    mini = temp;
+                }
+                else if (temp < secondMini)
+                {
+                    secondMini = temp;
+                }
+            }
+
+            minValue = min(minValue, mini);
+            minSecondValue = min(minSecondValue, secondMini);
+            sum += secondMini;
+        }
+
+        cout << sum - minSecondValue + minValue << endl;
     }
 }

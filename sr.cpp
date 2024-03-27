@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -180,10 +177,50 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        vector<int> v;
+        unordered_map<int, int> indexes;
+        string firstline;
+        getline(cin, firstline);
+
+        string cur;
+        for (auto &a : firstline)
+        {
+            if (a != ' ')
+            {
+                cur.push_back(a);
+            }
+            else
+            {
+                v.push_back(stoi(cur));
+                cur = "";
+            }
+        }
+        if (cur != "")
+            v.push_back(stoi(cur));
+        int n = v.size();
+        for (int i = n - 1; i >= 0; i--)
+            indexes[v[i]] = i;
+        int target;
+        cin >> target;
+        vector<int> ans;
+
+        for (int i = 0; i < n; i++)
+        {
+            int num = target - v[i];
+            if (indexes[num] && num != v[i])
+            {
+                ans.push_back(i);
+                ans.push_back(indexes[num]);
+                break;
+            }
+        }
+
+        for (auto &a : ans)
+            cout << a << " ";
+        cout << endl;
     }
 }

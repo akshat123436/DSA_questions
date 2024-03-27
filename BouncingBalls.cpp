@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -180,10 +177,47 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int m, n;
+        cin >> m >> n;
+        int xone, yone, xtwo, ytwo;
+        cin >> xone >> yone;
+        int dx1, dy1, dx2, dy2;
+        cin >> dx1 >> dy1;
+        cin >> xtwo >> ytwo;
+        cin >> dx2 >> dy2;
+        int ans = 0;
+        int limit = 1e1;
+        while (xone != xtwo || yone != ytwo)
+        {
+            cout << "-- " << xone << " " << yone << endl;
+            cout << xtwo << " " << ytwo << endl;
+            if (ans == limit)
+                break;
+            ans++;
+            if (xone + dx1 > 0 && xone + dx1 <= m)
+                xone += dx1;
+            if (yone + dy1 > 0 && yone + dy1 <= n)
+                yone += dy1;
+            if (xtwo + dx2 > 0 && xtwo + dx2 <= m)
+                xtwo += dx2;
+            if (ytwo + dy2 > 0 && ytwo + dy2 <= n)
+                ytwo += dy2;
+            if (xone == 1 && dx1 == -1 || xone == m && dx1 == 1)
+                dx1 = -dx1;
+            if (xtwo == 1 && dx2 == -1 || xtwo == m && dx2 == 1)
+                dx2 = -dx2;
+            if (yone == 1 && dy1 == -1 || yone == n && dy1 == 1)
+                dy1 = -dy1;
+            if (ytwo == 1 && dy2 == -1 || ytwo == n && dy2 == 1)
+                dy2 = -dy2;
+        }
+        if (ans != limit)
+            cout << ans << endl;
+        else
+            cout << "Never" << endl;
     }
 }

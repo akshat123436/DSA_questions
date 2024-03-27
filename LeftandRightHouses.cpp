@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,88 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+
+        vector<int> zeroCount(n, 0);
+
+        int left = -2, right = -1;
+
+        int totalOnes = 0;
+        if (s[0] == '0')
+            zeroCount[0] = 1;
+        else
+            totalOnes++;
+        for (int i = 1; i < n; i++)
+        {
+
+            zeroCount[i] = zeroCount[i - 1];
+            if (s[i] == '0')
+                zeroCount[i]++;
+            else
+                totalOnes++;
+        }
+
+        int ptr = n / 2 - 1;
+        // cout << ptr << endl;
+
+        while (ptr >= 0)
+        {
+            int leftZero = zeroCount[ptr];
+            int rightOnes = totalOnes - (ptr + 1 - leftZero);
+            if (leftZero >= ceil((ptr + 1) / 2.0) && rightOnes >= ceil((n - ptr - 1) / 2.0))
+            {
+                left = ptr;
+                break;
+            }
+            ptr--;
+            // cout << ptr << endl;
+        }
+
+        ptr = n / 2;
+        while (ptr < n)
+        {
+            // cout << ptr << endl;
+            int leftZero = zeroCount[ptr];
+            int rightOnes = totalOnes - (ptr + 1 - leftZero);
+            if (leftZero >= ceil((ptr + 1) / 2.0) && rightOnes >= ceil((n - ptr - 1) / 2.0))
+            {
+                right = ptr;
+                break;
+            }
+            ptr++;
+        }
+        int ans = 0;
+        // cout << left << " " << right << endl;
+        if (left == -2 && totalOnes >= ceil(n / 2.0))
+            left = -1;
+        if (left == -2 && right == -1)
+        {
+            if (totalOnes >= ceil(n / 2.0))
+                ans = 0;
+            else
+                ans = n;
+        }
+        else if (right == -1)
+        {
+            ans = left + 1;
+        }
+        else if (left == -2)
+        {
+            ans = right + 1;
+        }
+
+        else
+        {
+            double l = abs(n / 2.0 - (left + 1)), r = abs(n / 2.0 - (right + 1));
+            if (l <= r)
+                ans = left + 1;
+            else
+                ans = right + 1;
+        }
+
+        cout << ans << endl;
     }
 }

@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,21 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, one, two;
+        cin >> n >> one >> two;
+
+        int oddsum = (one - 1) * (one - 1);
+        int evensum = (two - 1) * (two - 1 + 1);
+
+        int rem = n - oddsum - evensum;
+
+        int numsum = 2 * (one)-1 + 2 * (two);
+
+        if ((rem & 1) == (numsum & 1) && numsum <= rem)
+        {
+            cout << "YES" << endl;
+        }
+        else
+            cout << "NO" << endl;
     }
 }

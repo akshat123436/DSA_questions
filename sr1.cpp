@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,21 +166,31 @@ public:
         }
     }
 };
-int32_t main()
+bool isDistinct(int num)
 {
-    fastio();
-#ifndef ONLINE_JUDGE
-
-    freopen("Error.txt", "w", stderr);
-
-#endif
-
-    int t = 1;
-
-    cin >> t;
-
-    while (t--)
+    vector<bool> check(10, false);
+    for (int i = 0; i < 4; i++)
     {
-        kljdsklfsdjfalk
+        bool val = check[num % 10];
+        if (val)
+            return false;
+        check[num % 10] = true;
+        num /= 10;
+    }
+    return true;
+}
+int main()
+{
+
+    int num;
+    cin >> num;
+
+    for (int i = num + 1; i < 9999; i++)
+    {
+        if (isDistinct(i))
+        {
+            cout << i << endl;
+            break;
+        }
     }
 }

@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,34 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        bool a = false, b = false, c = false;
+        char ans = 'A';
+        for (int i = 0; i < 3; i++)
+        {
+            a = false, b = false, c = false;
+            string temp;
+            cin >> temp;
+            for (int j = 0; j < 3; j++)
+            {
+                if (temp[j] == 'A')
+                    a = true;
+                if (temp[j] == 'B')
+                    b = true;
+                if (temp[j] == 'C')
+                    c = true;
+            }
+
+            if (a && b && c)
+                continue;
+
+            if (!a)
+                ans = 'A';
+            if (!b)
+                ans = 'B';
+            if (!c)
+                ans = 'C';
+        }
+
+        cout << ans << endl;
     }
 }

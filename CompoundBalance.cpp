@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,16 @@ public:
         }
     }
 };
+int reduced(int num)
+{
+    while (num / 10)
+    {
+        int temp = num % 10 + (num / 10);
+        num = temp;
+    }
+
+    return num;
+}
 int32_t main()
 {
     fastio();
@@ -180,10 +187,32 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        string s;
+        cin >> s;
+        int val;
+        cin >> val;
+        int first = reduced((int)(s[0]));
+        int second = reduced((int)(s[1]));
+        bool check = true;
+        // cout << first << endl
+        //      << second << endl;
+        for (int i = 1e5; i >= 0; i--)
+        {
+            int j = (val - (i * first)) / second;
+            if (i > 0 && j > 0)
+                if (j * second + i * first == val)
+                {
+                    // cout << i << " " << j << endl;
+                    cout << s[0] << to_string(i) << " " << s[1] << to_string(j) << endl;
+                    check = false;
+                }
+        }
+
+        if (check)
+            cout << "Not Possible" << endl;
     }
 }

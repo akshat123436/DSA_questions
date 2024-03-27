@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,29 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, k;
+        cin >> n >> k;
+
+        int minOp = INT_MAX;
+        int evenCount = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int temp;
+            cin >> temp;
+            int op = ceil((temp) / (double)(k)) * k - temp;
+            minOp = min(op, minOp);
+            if (!(temp & 1))
+                evenCount++;
+        }
+
+        if (k != 4)
+            cout << minOp << endl;
+        else
+        {
+            if (evenCount >= 2)
+                cout << 0 << endl;
+            else
+                cout << min((int)(2 - evenCount), minOp) << endl;
+        }
     }
 }

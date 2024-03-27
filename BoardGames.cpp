@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,51 @@ public:
         }
     }
 };
+
+int f(int i, int j, int destx, int desty, int addx, int addy, vector<vector<int>> &dp, vector<vector<int>> &arr, int m, int n)
+{
+    if (i < 0 || j < 0 || i >= n || j >= m)
+        return -1;
+    if (i == destx && j == desty)
+        return 0;
+    if (arr[i][j] == 1)
+        return -1;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+    arr[i][j] = 1;
+
+    int x = i + addx, y = j + addy;
+    int moves = INT_MAX;
+    int val = f(x, y, destx, desty, addx, addy, dp, arr, m, n);
+    if (val != -1 && val != INT_MAX)
+        moves = 1 + val;
+    int vx = x - i, vy = y - j;
+    x = i - vy;
+    y = j + vx;
+
+    if (!(x < 0 || y < 0 || x >= n || y >= m))
+        val = f(x, y, destx, desty, addx, addy, dp, arr, m, n);
+    if (val != -1 && val != INT_MAX)
+        moves = min(moves, 1 + val);
+
+    vx = x - i, vy = y - j;
+    x = i - vy;
+    y = j + vx;
+    if (!(x < 0 || y < 0 || x >= n || y >= m))
+        val = f(x, y, destx, desty, addx, addy, dp, arr, m, n);
+    if (val != -1 && val != INT_MAX)
+        moves = min(moves, 1 + val);
+
+    vx = x - i, vy = y - j;
+    x = i - vy;
+    y = j + vx;
+    if (!(x < 0 || y < 0 || x >= n || y >= m))
+        val = f(x, y, destx, desty, addx, addy, dp, arr, m, n);
+    if (val != -1 && val != INT_MAX)
+        moves = min(moves, 1 + val);
+    arr[i][j] = 0;
+    return dp[i][j] = moves;
+}
 int32_t main()
 {
     fastio();
@@ -180,10 +222,33 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+
+        int m, n;
+        cin >> m >> n;
+        vector<vector<int>> arr(m, vector<int>(n, 0));
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                cin >> arr[i][j];
+            }
+        }
+
+        int sourcex, sourcey, destx, desty;
+        int addx, addy;
+        cin >> sourcex >> sourcey >> destx >> desty >> addx >> addy;
+
+        int ans = INT_MAX;
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+
+        ans = min(ans, f(sourcex, sourcey, destx, desty, addx, addy, dp, arr, m, n));
+        if (ans != INT_MAX)
+            cout << ans;
+        else
+            cout << -1;
     }
 }

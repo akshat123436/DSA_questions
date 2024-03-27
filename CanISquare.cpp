@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,26 @@ public:
         }
     }
 };
+bool bs(int n, vector<int> &v)
+{
+    int start = 0, end = v.size() - 1;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+
+        if (n == v[mid])
+            return true;
+        else if (n > v[mid])
+        {
+            start = mid + 1;
+        }
+        else
+            end = mid - 1;
+    }
+
+    return false;
+}
 int32_t main()
 {
     fastio();
@@ -177,13 +194,31 @@ int32_t main()
     freopen("Error.txt", "w", stderr);
 
 #endif
-
+    vector<int> perfectSquares;
+    for (int i = 1; i * i <= 2 * 1e14; i++)
+    {
+        perfectSquares.push_back(i * i);
+    }
     int t = 1;
 
     cin >> t;
 
-    while (t--)
+        while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        int sum = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+            int temp;
+            cin >> temp;
+            sum += temp;
+        }
+
+        if (bs(sum, perfectSquares))
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
 }

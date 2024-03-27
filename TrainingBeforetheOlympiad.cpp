@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,62 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n;
+        cin >> n;
+        vector<int> arr(n), sum(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+
+        vector<int> count(n);
+        int c = 0;
+        int s = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] % 2)
+                c++;
+            count[i] = c;
+            sum[i] = arr[i] + s;
+            s = sum[i];
+        }
+
+        cout << arr[0] << " ";
+
+        for (int i = 1; i < n; i++)
+        {
+            bool masha = true;
+
+            int oddCount = count[i];
+            int subtraction = oddCount / 3;
+
+            if (oddCount % 3 == 1)
+                subtraction++;
+            // while (oddCount)
+            // {
+            //     if (masha)
+            //     {
+            //         if (oddCount / 2)
+            //         {
+            //             oddCount -= 2;
+            //         }
+            //         else
+            //         {
+            //             oddCount--;
+            //             subtraction++;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         oddCount--;
+            //         subtraction++;
+            //     }
+
+            //     masha = !masha;
+            // }
+
+            cout << sum[i] - subtraction << " ";
+        }
+        cout << endl;
     }
 }

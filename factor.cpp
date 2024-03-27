@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,30 @@ public:
         }
     }
 };
+
+int distinctFinder(int n)
+{
+    unordered_map<int, int> isPresent;
+    int count = 0;
+    while (n % 2 == 0)
+    {
+        isPresent[2]++;
+        n /= 2;
+    }
+    for (int i = 3; i * i <= n; i += 2)
+    {
+        while (n % i == 0)
+        {
+            isPresent[i]++;
+            n /= i;
+        }
+    }
+    if (n > 2)
+        isPresent[n]++;
+    int s = isPresent.size();
+    return s;
+}
+
 int32_t main()
 {
     fastio();
@@ -184,6 +205,51 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, k;
+        cin >> n;
+
+        vector<int> v(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            cin >> v[i];
+        }
+        cin >> k;
+        int minsize = INT_MAX;
+
+        int prod = v[0];
+
+        int back = 0, front = 0;
+
+        while (back < n && front < n)
+        {
+            int subArraySize = front - back + 1;
+
+            if (subArraySize >= minsize)
+            {
+                prod /= v[back];
+                back++;
+            }
+            else
+            {
+                int distinct = distinctFinder(prod);
+                if (distinct > k)
+                {
+                    minsize = min(minsize, subArraySize);
+                    prod /= v[back];
+                    back++;
+                }
+                else
+                {
+                    front++;
+                    if (front < n)
+                        prod *= v[front];
+                }
+            }
+        }
+
+        if (minsize == INT_MAX)
+            return -1;
+        return minsize;
     }
 }

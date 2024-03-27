@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,26 @@ public:
         }
     }
 };
+int f(int i, int j, int destx, int desty, vector<vector<int>> &arr, vector<vector<int>> &dp, int m, int n)
+{
+    if (i < 0 || j < 0 || i >= m || j >= n)
+        return -1;
+    if (i == destx && j == desty)
+        return arr[i][j];
+    if (dp[i][j] != -1)
+        return dp[i][j];
+
+    // right
+    int minVal = INT_MAX;
+    if (i + 1 <= destx)
+        minVal = arr[i][j] + f(i + 1, j, destx, desty, arr, dp, m, n);
+
+    // bottom
+    if (j + 1 <= desty)
+        minVal = min(minVal, arr[i][j] + f(i, j + 1, destx, desty, arr, dp, m, n));
+
+    return dp[i][j] = minVal;
+}
 int32_t main()
 {
     fastio();
@@ -180,10 +197,33 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int m, n;
+        cin >> m >> n;
+        vector<vector<int>> arr(m, vector<int>(n, 0));
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                cin >> arr[i][j];
+            }
+        }
+
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        int sourcex, sourcey, destx, desty;
+        cin >> sourcex >> sourcey >> destx >> desty;
+
+        sourcex--;
+        sourcey--;
+        destx--;
+        desty--;
+        if (sourcex <= destx && sourcey <= desty)
+            cout << f(sourcex, sourcey, destx, desty, arr, dp, m, n);
+        else
+            cout << -1;
     }
 }

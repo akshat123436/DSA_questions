@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -169,6 +166,106 @@ public:
         }
     }
 };
+
+vector<int> findPrefix(string &pattern)
+{
+    int m = pattern.length();
+    vector<int> prefix_function(m, 0);
+    int length = 0;
+    int i = 1;
+
+    while (i < m)
+    {
+        if (pattern[i] == pattern[length])
+        {
+            length++;
+            prefix_function[i] = length;
+            i++;
+        }
+        else
+        {
+            if (length != 0)
+            {
+                length = prefix_function[length - 1];
+            }
+            else
+            {
+                prefix_function[i] = 0;
+                i++;
+            }
+        }
+    }
+
+    return prefix_function;
+}
+
+bool checkSubstring(string &text, string &pattern)
+{
+    int n = text.length();
+    int m = pattern.length();
+
+    vector<int> prefix_function = findPrefix(pattern);
+
+    int i = 0;
+    int j = 0;
+
+    while (i < n)
+    {
+        if (pattern[j] == text[i])
+        {
+            i++;
+            j++;
+
+            if (j == m)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if (j != 0)
+            {
+                j = prefix_function[j - 1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+
+    return false;
+}
+void f(string &a, string &b, int i, string &cur, string &ans, int an, int bn)
+{
+    cout << cur << endl;
+    if (i == an)
+    {
+        ans = cur;
+        return;
+    }
+    if (cur != "")
+        cur.push_back('|');
+    string temp;
+    for (int j = i; j < an; j++)
+    {
+        cur.push_back(a[j]);
+        temp.push_back(a[j]);
+        // cout << temp << " " << b << endl;
+        if (checkSubstring(b, temp))
+        {
+            cout << temp << endl;
+            f(a, b, j + 1, cur, ans, an, bn);
+        }
+    }
+
+    for (auto &a : temp)
+    {
+        cur.pop_back();
+    }
+
+    cur.pop_back();
+}
 int32_t main()
 {
     fastio();
@@ -180,10 +277,20 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        string a, b;
+        cin >> a >> b;
+
+        string cur;
+        string ans;
+        f(a, b, 0, cur, ans, a.length(), b.length());
+
+        if (ans != "")
+            cout << ans;
+        else
+            cout << "Impossible";
     }
 }

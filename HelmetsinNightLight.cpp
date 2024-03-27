@@ -1,7 +1,4 @@
-
-
 /*------------------Instant success builds ego, long term success builds character.---------------*/
-
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -184,6 +181,51 @@ int32_t main()
 
     while (t--)
     {
-        kljdsklfsdjfalk
+        int n, p;
+        cin >> n >> p;
+
+        vector<int> capacity(n), cost(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            cin >> capacity[i];
+        }
+        for (int i = 0; i < n; i++)
+        {
+            cin >> cost[i];
+        }
+
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        vector<pair<int, int>> v;
+
+        for (int i = 0; i < n; i++)
+            v.push_back({cost[i], capacity[i]});
+        sort(v.begin(), v.end());
+
+        stack<pair<int, int>> st;
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            st.push(v[i]);
+        }
+
+        pq.push({p, n});
+        int ans = 0;
+        while (!st.empty())
+        {
+            while (pq.top().second == 0)
+                pq.pop();
+            auto tp = pq.top();
+            pq.pop();
+            ans += tp.first;
+            tp.second = tp.second - 1;
+
+            pq.push(tp);
+
+            pq.push(st.top());
+            st.pop();
+        }
+
+        cout << ans << endl;
     }
 }
