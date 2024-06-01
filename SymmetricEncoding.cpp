@@ -217,5 +217,28 @@ int32_t main()
 
     while (t--)
     {
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+
+        set<char> st;
+        for (auto &a : s)
+            st.insert(a);
+        string en;
+        for (auto &a : st)
+            en.push_back(a);
+        int l = en.length();
+        map<char, int> mp;
+        for (int i = 0; i < l; i++)
+        {
+            mp[en[i]] = i;
+        }
+        // string ans;
+        for (auto &a : s)
+        {
+            a = en[l - mp[a] - 1];
+        }
+        cout << s << endl;
     }
 }

@@ -169,39 +169,6 @@ public:
         }
     }
 };
-
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
-{
-    int ans = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
-        }
-        else
-        {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
-        }
-    }
-    return ans;
-}
-
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
-    {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
-    }
-
-    return val;
-}
 int32_t main()
 {
     fastio();
@@ -217,5 +184,16 @@ int32_t main()
 
     while (t--)
     {
+        string s;
+        cin >> s;
+        int oneZero = 0, zeroOne = 0;
+        for (int i = 0; i < s.length() - 1; i++)
+        {
+            if (s[i] == '0' && s[i + 1] == '1')
+                zeroOne++;
+            if (s[i] == '1' && s[i + 1] == '0')
+                oneZero++;
+        }
+        cout << (zeroOne ? zeroOne + oneZero - 1 : oneZero) + 1 << endl;
     }
 }

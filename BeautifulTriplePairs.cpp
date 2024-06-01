@@ -217,5 +217,37 @@ int32_t main()
 
     while (t--)
     {
+        int n;
+        cin >> n;
+        vector<int> arr(n);
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+
+        map<pair<int, int>, int> counts, counte, countsp;
+        map<pair<pair<int, int>, int>, int> individualCounts, individualCounte, individualCountsp;
+
+        for (int i = 0; i < n - 2; i++)
+        {
+            vector<int> cur = {arr[i], arr[i + 1], arr[i + 2]};
+            // sort(cur.begin(), cur.end());
+            // set<pair<int, int>> temp;
+            counts[{cur[0], cur[1]}]++;
+            counte[{cur[1], cur[2]}]++;
+            countsp[{cur[0], cur[2]}]++;
+            individualCounts[{{cur[0], cur[1]}, cur[2]}]++;
+            individualCounte[{{cur[1], cur[2]}, cur[0]}]++;
+            individualCountsp[{{cur[0], cur[2]}, cur[1]}]++;
+        }
+        int ans = 0;
+        for (int i = 0; i < n - 2; i++)
+        {
+            vector<int> cur = {arr[i], arr[i + 1], arr[i + 2]};
+            ans += counts[{cur[0], cur[1]}] - individualCounts[{{cur[0], cur[1]}, cur[2]}];
+            ans += counte[{cur[1], cur[2]}] - individualCounte[{{cur[1], cur[2]}, cur[0]}];
+            ans += countsp[{cur[0], cur[2]}] - individualCountsp[{{cur[0], cur[2]}, cur[1]}];
+        }
+        cout << ans / 2 << endl;
     }
 }

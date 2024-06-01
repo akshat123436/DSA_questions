@@ -169,39 +169,37 @@ public:
         }
     }
 };
-
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
+int dp[100000 + 1];
+int f(int n)
 {
-    int ans = 1;
-    while (b > 0)
+    if (dp[n] != -1)
+        return dp[n];
+    bool check = true;
+
+    int temp = n;
+
+    while (temp)
     {
-        if (b & 1)
+        if (temp % 10 > 1)
         {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
+            check = false;
+            break;
         }
-        else
-        {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
-        }
+        temp /= 10;
     }
-    return ans;
-}
-
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
+    if (check)
+        return dp[n] = 1;
+    for (int i = 2; i * i <= n; i++)
     {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
+        if (n % i)
+            continue;
+        if (f(i) == 1 && f(n / i) == 1)
+            return dp[n] = 1;
     }
 
-    return val;
+    return dp[n] = 0;
 }
+
 int32_t main()
 {
     fastio();
@@ -212,10 +210,59 @@ int32_t main()
 #endif
 
     int t = 1;
-
+    memset(dp, -1, sizeof(dp));
     cin >> t;
 
     while (t--)
     {
+        // int n;
+        // cin >> n;
+
+        // int req = 1;
+        // bool ans = true;
+        // map<int, int> count;
+        // while (n)
+        // {
+        //     bool check = false;
+        //     int pairs = n % 10;
+        //     for (int i = 0; i < pairs; i++)
+        //     {
+        //         int num = 1;
+        //         while (num <= req)
+        //         {
+        //             if (count[num] < 2 && count[req / num] < 2)
+        //             {
+        //                 count[num]++;
+        //                 count[req / num]++;
+        //                 check = true;
+        //                 break;
+        //             }
+        //             num *= 10;
+        //         }
+        //         if (!check)
+        //         {
+        //             ans = false;
+        //             break;
+        //         }
+        //     }
+        //     n >>= 1;
+        //     req *= 10;
+        // }
+
+        // if (ans)
+        //     cout << "YES";
+        // else
+        //     cout << "NO";
+        // cout << endl;
+
+        int n;
+        cin >> n;
+
+        if (f(n) == 1)
+        {
+            cout << "YES" << endl;
+        }
+        else
+            cout << "NO" << endl;
     }
 }

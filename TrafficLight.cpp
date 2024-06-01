@@ -34,24 +34,77 @@ typedef long double lld;
 #define debug(x)
 #endif
 
-void _print(ll t) {cerr << t;}
-//void _print(int t) {cerr << t;}
-void _print(string t) {cerr << t;}
-void _print(char t) {cerr << t;}
-void _print(lld t) {cerr << t;}
-void _print(double t) {cerr << t;}
-void _print(ull t) {cerr << t;}
+void _print(ll t) { cerr << t; }
+// void _print(int t) {cerr << t;}
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(lld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
 
-template <class T, class V> void _print(pair <T, V> p);
-template <class T> void _print(vector <T> v);
-template <class T> void _print(set <T> v);
-template <class T, class V> void _print(map <T, V> v);
-template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
-template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T, class V>
+void _print(pair<T, V> p);
+template <class T>
+void _print(vector<T> v);
+template <class T>
+void _print(set<T> v);
+template <class T, class V>
+void _print(map<T, V> v);
+template <class T>
+void _print(multiset<T> v);
+template <class T, class V>
+void _print(pair<T, V> p)
+{
+    cerr << "{";
+    _print(p.ff);
+    cerr << ",";
+    _print(p.ss);
+    cerr << "}";
+}
+template <class T>
+void _print(vector<T> v)
+{
+    cerr << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
+}
+template <class T>
+void _print(set<T> v)
+{
+    cerr << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
+}
+template <class T>
+void _print(multiset<T> v)
+{
+    cerr << "[ ";
+    for (T i : v)
+    {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
+}
+template <class T, class V>
+void _print(map<T, V> v)
+{
+    cerr << "[ ";
+    for (auto i : v)
+    {
+        _print(i);
+        cerr << " ";
+    }
+    cerr << "]";
+}
 
 //---------------------------------------------------------------------------------------------------------------------------------------
 
@@ -104,47 +157,80 @@ int32_t main()
 
     while (t--)
     {
+        // int n;
+        // cin >> n;
+
+        // char c;
+        // cin >> c;
+
+        // string s;
+        // cin >> s;
+        // // cout << n << c << s << endl;
+        // vector<int> green;
+
+        // for (int i = 0; i < n; i++)
+        // {
+        //     if (s[i] == 'g')
+        //     {
+        //         green.push_back(i);
+        //     }
+        // }
+        // // debug(green);
+        // int ans = INT_MIN;
+        // // debug(ans);
+        // for (int i = 0; i < n; i++)
+        // {
+        //     if (s[i] == c)
+        //     {
+        //         int ptr = lower_bound(green.begin(), green.end(), i) - green.begin();
+        //         // cout << ptr << endl;
+        //         // cout << green.size() << endl;
+        //         if (ptr == green.size())
+        //         {
+
+        //                 ans = max(ans, green[0] + n - i);
+
+        //         }
+        //         else
+        //         {
+        //             ans = max(ans, green[ptr] - i);
+        //         }
+        //     }
+        // }
+
+        // cout << ans << endl;
+
         int n;
         cin >> n;
-
         char c;
         cin >> c;
 
         string s;
         cin >> s;
-        // cout << n << c << s << endl;
-        vector<int> green;
+
+        set<int> st;
 
         for (int i = 0; i < n; i++)
         {
             if (s[i] == 'g')
-            {
-                green.push_back(i);
-            }
+                st.insert(i);
         }
-        // debug(green);
-        int ans = INT_MIN;
-        // debug(ans);
+        int ans = 0;
         for (int i = 0; i < n; i++)
         {
             if (s[i] == c)
             {
-                int ptr = lower_bound(green.begin(), green.end(), i) - green.begin();
-                // cout << ptr << endl;
-                // cout << green.size() << endl;
-                if (ptr == green.size())
+                auto t = st.lower_bound(i);
+                if (t != st.end())
                 {
-
-                        ans = max(ans, green[0] + n - i);
-                    
+                    ans = max(ans, *t - i);
                 }
                 else
                 {
-                    ans = max(ans, green[ptr] - i);
+                    ans = max(ans, n - i + *st.begin());
                 }
             }
         }
-
         cout << ans << endl;
     }
 }

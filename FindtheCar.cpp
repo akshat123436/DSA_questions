@@ -169,39 +169,31 @@ public:
         }
     }
 };
-
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
+pair<int, int> bs(vector<int> &arr, int num, int high)
 {
-    int ans = 1;
-    while (b > 0)
+    high = high - 1;
+    int low = 0;
+    if (arr[low] >= num)
+        return {0, 0};
+    while (high - low > 1)
     {
-        if (b & 1)
+        int mid = low + (high - low) / 2;
+        if (arr[mid] > num)
         {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
+            high = mid;
+        }
+        else if (arr[mid] < num)
+        {
+            low = mid;
         }
         else
         {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
+            return {mid, mid};
         }
     }
-    return ans;
+    return {low, high};
 }
 
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
-    {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
-    }
-
-    return val;
-}
 int32_t main()
 {
     fastio();
@@ -217,5 +209,41 @@ int32_t main()
 
     while (t--)
     {
+        int n, k, q;
+        cin >> n >> k >> q;
+
+        vector<int> arr(k), times(k);
+
+        for (int i = 0; i < k; i++)
+            cin >> arr[i];
+        for (int i = 0; i < k; i++)
+            cin >> times[i];
+
+        for (int i = 0; i < q; i++)
+        {
+            int temp;
+            cin >> temp;
+
+            auto t = bs(arr, temp, k);
+            int low = t.first, high = t.second;
+            int l = arr[low], h = arr[high], lt = times[low], ht = times[high];
+            if (high == 0)
+            {
+                l = 0;
+                lt = 0;
+            }
+            if (l == temp)
+            {
+                cout << lt << " ";
+                continue;
+                cout << endl;
+            }
+
+            // cout << lt << " " << temp << " " << l << " " << av << endl;
+            int time = lt + (temp - l) * (ht - lt) / (h - l);
+            // cout << (temp - l) / avgSpeed << endl;
+            cout << std::fixed << std::setprecision(0) << (time) << " ";
+        }
+        cout << endl;
     }
 }

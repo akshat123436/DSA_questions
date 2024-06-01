@@ -217,5 +217,35 @@ int32_t main()
 
     while (t--)
     {
+        int n, k;
+        cin >> n >> k;
+        string s;
+        cin >> s;
+
+        vector<int> count(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == 'B')
+                count[i] = 1;
+        }
+
+        for (int i = 1; i < n; i++)
+            count[i] += count[i - 1];
+
+        int ans = k;
+
+        ans = min(ans, k - count[k - 1]);
+
+        int r = k, l = 0;
+
+        while (r < n)
+        {
+            ans = min(ans, k - (count[r] - count[l]));
+            l++;
+            r++;
+        }
+
+        cout << ans << endl;
     }
 }

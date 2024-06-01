@@ -217,5 +217,37 @@ int32_t main()
 
     while (t--)
     {
+        int n, r, b;
+        cin >> n >> r >> b;
+
+        int lowValue = r / (b + 1);
+        int lowCount = (b + 1) - (r % (b + 1));
+        int highCount = r % (b + 1);
+        int i = 0;
+        while (lowCount || highCount || b)
+        {
+            if ((i & 1) && b)
+            {
+                cout << 'B';
+                b--;
+            }
+            else
+            {
+                if (lowCount)
+                {
+                    for (int j = 0; j < lowValue; j++)
+                        cout << 'R';
+                    lowCount--;
+                }
+                else
+                {
+                    for (int j = 0; j < lowValue + 1; j++)
+                        cout << 'R';
+                    highCount--;
+                }
+            }
+            i++;
+        }
+        cout << endl;
     }
 }

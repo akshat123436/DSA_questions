@@ -170,37 +170,28 @@ public:
     }
 };
 
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
+bool f(string &s, int n)
 {
-    int ans = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
-        }
-        else
-        {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
-        }
-    }
-    return ans;
-}
+    int realLength = s.length();
 
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
+    if (realLength % n)
+        return false;
+
+    string sub = s.substr(0, n);
+    string temp = sub;
+    while (sub.length() < s.length())
+    {
+        temp += sub;
+    }
+    int c = 0;
 
     for (int i = 0; i < s.length(); i++)
     {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
+        if (s[i] != sub[i])
+            c++;
     }
 
-    return val;
+    return c <= 1;
 }
 int32_t main()
 {
@@ -217,5 +208,34 @@ int32_t main()
 
     while (t--)
     {
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+
+        int low = 1, high = n;
+        while (low < high)
+        {
+            cout << low << " " << high << endl;
+            int mid = (low) + (high - low) / 2;
+
+            if (f(s, mid))
+            {
+                high = mid;
+            }
+            else
+            {
+                low = mid + 1;
+            }
+        }
+
+        if (f(s, low))
+        {
+            cout << low << endl;
+        }
+        else
+        {
+            cout << high << endl;
+        }
     }
 }

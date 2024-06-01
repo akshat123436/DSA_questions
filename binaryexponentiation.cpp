@@ -170,37 +170,41 @@ public:
     }
 };
 
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
+// int be(int a, int x)
+// {
+//     if (x == 0)
+//         return 1;
+//     if (x == 1)
+//         return a;
+
+//     if (x & 1)
+//         return a * be(a, x - 1);
+//     return be(a * a, x / 2);
+// }
+
+int be(int a, int x)
 {
     int ans = 1;
-    while (b > 0)
+
+    while (x >= 1)
     {
-        if (b & 1)
+        if (x & 1)
         {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
+            ans = ((ans % MOD) * (a % MOD)) % MOD;
+            x -= 1;
         }
         else
         {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
+            a = ((a % MOD) * (a % MOD)) % MOD;
+            x /= 2;
         }
     }
+
     return ans;
 }
-
-// to hash a string
-int h(string &s)
+int modDivision(int a, int b)
 {
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
-    {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
-    }
-
-    return val;
+    return ((a % MOD) * (be(b, MOD - 2) % MOD)) % MOD;
 }
 int32_t main()
 {
@@ -217,5 +221,9 @@ int32_t main()
 
     while (t--)
     {
+        int a, x;
+        cin >> a >> x;
+
+        cout << modDivision(a, x) << endl;
     }
 }

@@ -104,48 +104,72 @@ int32_t main()
 
     while (t--)
     {
-        int n, days, temp;
-        cin >> n >> days >> temp;
+        // int n, days, temp;
+        // cin >> n >> days >> temp;
 
-        int arr[n];
+        // int arr[n];
 
-        for (int i = 0; i < n; i++)
-        {
-            cin >> arr[i];
-            if (arr[i] > temp)
-                arr[i] = 0;
-            else
-                arr[i] = 1;
-        }
-
-        for (int i = 1; i < n; i++)
-        {
-            if (arr[i])
-                arr[i] += arr[i - 1];
-        }
         // for (int i = 0; i < n; i++)
-        //     cout << arr[i] << " ";
-        // cout << endl;
-        int p = 0;
+        // {
+        //     cin >> arr[i];
+        //     if (arr[i] > temp)
+        //         arr[i] = 0;
+        //     else
+        //         arr[i] = 1;
+        // }
+
+        // for (int i = 1; i < n; i++)
+        // {
+        //     if (arr[i])
+        //         arr[i] += arr[i - 1];
+        // }
+        // // for (int i = 0; i < n; i++)
+        // //     cout << arr[i] << " ";
+        // // cout << endl;
+        // int p = 0;
+        // int ans = 0;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     if (arr[i] == 0 && p >= days)
+        //     {
+        //         ans += (p + 1) * (p - days + 1) - (p + days) * (p - days + 1) / 2;
+        //         p = 0;
+        //     }
+        //     else if (arr[i] != 0)
+        //     {
+        //         p = arr[i];
+        //     }
+        //     else
+        //     {
+        //         p = 0;
+        //     }
+        // }
+        // if (p >= days)
+        //     ans += (p + 1) * (p - days + 1) - (p + days) * (p - days + 1) / 2;
+        // cout << ans << endl;
+
+        int n, q, k;
+        cin >> n >> q >> k;
+        int curSize = 0;
         int ans = 0;
         for (int i = 0; i < n; i++)
         {
-            if (arr[i] == 0 && p >= days)
-            {
-                ans += (p + 1) * (p - days + 1) - (p + days) * (p - days + 1) / 2;
-                p = 0;
-            }
-            else if (arr[i] != 0)
-            {
-                p = arr[i];
-            }
+            int temp;
+            cin >> temp;
+
+            if (temp <= k)
+                curSize++;
             else
             {
-                p = 0;
+                if (curSize >= q)
+                {
+                    ans += (curSize - q + 1) * (curSize - q + 2) / 2;
+                }
+                curSize = 0;
             }
         }
-        if (p >= days)
-            ans += (p + 1) * (p - days + 1) - (p + days) * (p - days + 1) / 2;
+        if (curSize >= q)
+            ans += (curSize - q + 1) * (curSize - q + 2) / 2;
         cout << ans << endl;
     }
 }

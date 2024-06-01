@@ -213,9 +213,63 @@ int32_t main()
 
     int t = 1;
 
-    cin >> t;
+    // cin >> t;
 
     while (t--)
     {
+        string s;
+        cin >> s;
+        vector<int> v(26, 0);
+
+        for (auto &a : s)
+        {
+            v[a - 'A']++;
+        }
+        bool odd = false;
+        bool pos = true;
+        for (auto &a : v)
+        {
+            if (a & 1)
+            {
+                if (odd)
+                    pos = false;
+                else
+                {
+                    odd = true;
+                }
+            }
+        }
+        if (pos)
+        {
+            string a, b, c;
+            for (int i = 0; i < 26; i++)
+            {
+                // cout << a << b << c << endl;
+                // cout << v[i] << endl;
+                if (v[i] & 1)
+                {
+                    while (v[i])
+                    {
+                        // cout << i + 'A' << endl;
+                        b.push_back(i + 'A');
+                        v[i]--;
+                    }
+                }
+                else
+                {
+                    for (int j = 0; j < v[i] / 2; j++)
+                    {
+                        a.push_back(i + 'A');
+                    }
+                }
+            }
+            c = a;
+            reverse(c.begin(), c.end());
+            cout << a + b + c << endl;
+        }
+        else
+        {
+            cout << "NO SOLUTION";
+        }
     }
 }

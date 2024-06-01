@@ -169,39 +169,6 @@ public:
         }
     }
 };
-
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
-{
-    int ans = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
-        }
-        else
-        {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
-        }
-    }
-    return ans;
-}
-
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
-    {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
-    }
-
-    return val;
-}
 int32_t main()
 {
     fastio();
@@ -217,5 +184,61 @@ int32_t main()
 
     while (t--)
     {
+        string s;
+        cin >> s;
+
+        int hour = 0, min = 0;
+
+        hour += stoi(s.substr(0, 2));
+        min += stoi(s.substr(3, 2));
+        if (hour == 0 && min == 0)
+        {
+            cout << "12:00 AM";
+        }
+        else if (hour < 12)
+        {
+
+            if (hour && hour < 10)
+            {
+                cout << '0' << hour;
+            }
+            else if (hour)
+            {
+                cout << hour;
+            }
+            else
+                cout << "12";
+            cout << ":";
+            if (min < 10)
+                cout << '0' << min;
+            else
+                cout << min;
+            cout << " AM";
+        }
+        else if (hour == 12 && min == 0)
+        {
+            cout << "12:00 PM";
+        }
+        else
+        {
+            if (hour != 12)
+                hour %= 12;
+            if (hour < 10)
+            {
+                cout << '0' << hour;
+            }
+            else
+            {
+                cout << hour;
+            }
+            cout << ":";
+            if (min < 10)
+                cout
+                    << '0' << min;
+            else
+                cout << min;
+            cout << " PM";
+        }
+        cout << endl;
     }
 }

@@ -217,5 +217,15 @@ int32_t main()
 
     while (t--)
     {
+        int ans = 0;
+        int x, y;
+        cin >> x >> y;
+
+        ans = (y + 1) / 2;
+        int cap = ans * 15 - y * 4;
+        if (x > cap)
+            ans += (x - cap + 14) / 15;
+
+        cout << ans << endl;
     }
 }

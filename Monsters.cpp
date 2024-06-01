@@ -170,40 +170,16 @@ public:
     }
 };
 
-// to find (a ^ b) with modulo m
-int power(int a, int b, int m)
+bool cmp(pair<int, int> &a, pair<int, int> &b)
 {
-    int ans = 1;
-    while (b > 0)
-    {
-        if (b & 1)
-        {
-            ans = ((a % m) * (ans % m)) % m;
-            b--;
-        }
-        else
-        {
-            a = ((a % m) * (a % m)) % m;
-            b >>= 1;
-        }
-    }
-    return ans;
+    if (a.first != b.first)
+        return a.first < b.first;
+    return a.second > b.second;
 }
 
-// to hash a string
-int h(string &s)
-{
-    int val = 0;
-
-    for (int i = 0; i < s.length(); i++)
-    {
-        val = (val * 31 + (s[i] - 'a' + 1)) % MOD;
-    }
-
-    return val;
-}
 int32_t main()
 {
+
     fastio();
 #ifndef ONLINE_JUDGE
 
@@ -217,5 +193,28 @@ int32_t main()
 
     while (t--)
     {
+        int n, k;
+        cin >> n >> k;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(&cmp)> pq(cmp);
+        for (int i = 1; i <= n; i++)
+        {
+            int temp;
+            cin >> temp;
+            // cout << temp << endl;
+            if (temp % k)
+                pq.push({temp % k, i});
+            else if (temp)
+                pq.push({k, i});
+            else
+                pq.push({temp, i});
+            // cout << pq.top().first << " " << pq.top().second << endl;
+        }
+
+        while (!pq.empty())
+        {
+            cout << pq.top().second << " ";
+            pq.pop();
+        }
+        cout << endl;
     }
 }
