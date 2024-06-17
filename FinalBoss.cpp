@@ -202,6 +202,19 @@ int h(string &s)
 
     return val;
 }
+
+bool f(vector<int> &a, vector<int> &c, int mid, int health)
+{
+    int sum = 0;
+    int n = a.size();
+    for (int i = 0; i < n; i++)
+    {
+        int turns = (mid - 1) / c[i] + 1;
+        sum += turns * a[i];
+    }
+    return sum >= health;
+}
+
 int32_t main()
 {
     fastio();
@@ -217,34 +230,40 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
+        int health, n;
+        cin >> health >> n;
+        vector<int> a(n), c(n);
+        int sum = 0;
+        int maxCooldown = 0;
         for (int i = 0; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
+            cin >> a[i];
+            sum += a[i];
         }
-        for (auto &t : allStrings)
+        for (int i = 0; i < n; i++)
         {
-            if (!hasParent[t])
+            cin >> c[i];
+            maxCooldown = max(maxCooldown, c[i]);
+        }
+        int minTurns = health / sum;
+        int high = 1 + (minTurns * maxCooldown);
+        int low = 1;
+
+        while (high - low > 1)
+        {
+            int mid = low + (high - low) / 2;
+            if (f(a, c, mid, health))
             {
-                topper = t;
-                break;
+                high = mid;
+            }
+            else
+            {
+                low = mid + 1;
             }
         }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
-        cout << endl;
+        if (f(a, c, low, health))
+            cout << low << endl;
+        else
+            cout << high << endl;
     }
 }

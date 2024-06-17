@@ -217,34 +217,97 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
+        int n;
+        cin >> n;
+        string a, b;
+        cin >> a >> b;
+        vector<int> aHelpRight(n), bHelpRight(n), aHelpLeft(n), bHelpLeft(n);
 
-        string topper;
         for (int i = 0; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
+            aHelpLeft[i] = i;
+            aHelpRight[i] = i;
+            bHelpLeft[i] = i;
+            bHelpRight[i] = i;
         }
-        for (auto &t : allStrings)
+
+        for (int i = 0; i < n; i++)
         {
-            if (!hasParent[t])
+            if (b[i] != '1')
             {
-                topper = t;
-                break;
+                if (i > 0 && i < n - 1 && a[i - 1] == a[i + 1] && a[i - 1] == '0')
+                {
+                    bHelpLeft[i] = i - 1;
+                    bHelpRight[i] = i + 1;
+                    b[i] = '1';
+                }
             }
         }
-        while (topper != "")
+        for (int i = 0; i < n; i++)
         {
-            cout << topper << " ";
-            topper = children[topper];
+            if (a[i] != '1')
+            {
+                if (i > 0 && i < n - 1 && b[i - 1] == b[i + 1] && b[i - 1] == '1')
+                {
+                    // cout << i << endl;
+                    aHelpLeft[i] = bHelpLeft[i - 1];
+                    aHelpRight[i] = bHelpRight[i + 1];
+                    a[i] = '1';
+                }
+            }
         }
-        cout << endl;
+        vector<int> count(n);
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] == '1')
+                count[i] = 1;
+            if (i)
+                count[i] += count[i - 1];
+        }
+        int q;
+        cin >> q;
+        for (int k = 0; k < q; k++)
+        {
+            int left, right;
+            cin >> left >> right;
+            left--;
+            right--;
+            int ans = count[right];
+            if (left > 0)
+                ans = count[right] - count[left - 1];
+            // cout << ans << endl;
+            // bool l = false, r = false;
+            // if (aHelpLeft[left] < left)
+            //     l = true;
+            // if (aHelpRight[right] > right)
+            //     r = true;
+            // if (l || r)
+            // {
+            //     if (left == right)
+            //     {
+            //         ans--;
+            //     }
+            //     else
+            //     {
+            //         if (l)
+            //             ans--;
+            //         if (r)
+            //             ans--;
+            //     }
+            // }
+            set<int> st;
+            st.insert(left);
+            st.insert(right);
+            if (left + 1 < right)
+                st.insert(left + 1);
+            if (right - 1 > left)
+                st.insert(right - 1);
+            for (auto &a : st)
+            {
+                if (aHelpLeft[a] < left || aHelpRight[a] > right)
+                    ans--;
+            }
+            cout << ans << endl;
+        }
     }
 }

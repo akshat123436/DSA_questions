@@ -217,34 +217,15 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
-        for (int i = 0; i < n; i++)
-        {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
-        }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
-        cout << endl;
+        int n, a, b;
+        cin >> n >> a >> b;
+        int i = b - a + 1;
+        if (i <= 0)
+            i = 0;
+        if (i > n)
+            i = n;
+        int ans = (b * i) + i - ((i * (i + 1)) / 2);
+        ans += (n - i) * a;
+        cout << ans << endl;
     }
 }

@@ -202,9 +202,60 @@ int h(string &s)
 
     return val;
 }
+void merge(int *arr, int low, int mid, int high)
+{
+    // cout << low << " " << mid << " " << high << endl;
+    int arr2[high - low + 1];
+    int i = low, j = mid + 1, k = 0;
+
+    while (i <= mid && j <= high)
+    {
+        if (arr[i] < arr[j])
+        {
+            arr2[k] = arr[i];
+            i++;
+        }
+        else
+        {
+            arr2[k] = arr[j];
+            j++;
+        }
+        k++;
+    }
+    while (i <= mid)
+    {
+        arr2[k] = arr[i];
+        i++;
+        k++;
+    }
+    while (j <= high)
+    {
+        arr2[k] = arr[j];
+        j++;
+        k++;
+    }
+    i = low, k = 0;
+    while (k < high - low + 1)
+    {
+        arr[i] = arr2[k];
+        i++;
+        k++;
+    }
+}
+void mergeSort(int *arr, int i, int j)
+{
+    // cout << i << " " << j << endl;
+    if (i == j)
+        return;
+    int mid = (i + j) / 2;
+    mergeSort(arr, i, mid);
+    mergeSort(arr, mid + 1, j);
+    merge(arr, i, mid, j);
+}
+
 int32_t main()
 {
-    fastio();
+    // fastio();
 #ifndef ONLINE_JUDGE
 
     freopen("Error.txt", "w", stderr);
@@ -217,34 +268,10 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
-        for (int i = 0; i < n; i++)
-        {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
-        }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
+        int arr[] = {1, 7, 4, 19, 11};
+        mergeSort(arr, 0, 4);
+        for (int i = 0; i < 5; i++)
+            cout << arr[i] << " ";
         cout << endl;
     }
 }

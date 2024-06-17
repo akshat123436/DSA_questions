@@ -202,6 +202,19 @@ int h(string &s)
 
     return val;
 }
+int f(int i, int n, map<pair<int, int>, int> &count, map<pair<int, int>, bool> &vis, vector<int> &v, int k, int sum)
+{
+    if (i == n)
+    {
+        if (k == 0)
+            return 1;
+        return 0;
+    }
+
+    count[{i, k}] = f(i + 1, n, count, vis, v, k - (sum + v[i]), sum + v[i]) + f(i + 1, n, count, vis, v, k - abs(sum + v[i]), abs(sum + v[i]));
+    vis[{i, k}] = true;
+    return count[{i, k}];
+}
 int32_t main()
 {
     fastio();
@@ -217,34 +230,24 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
+        int n;
+        cin >> n;
+        vector<int> v(n);
         for (int i = 0; i < n; i++)
+            cin >> v[i];
+
+        int ans = 0, maxNegative = v[0], maxPositive = abs(v[0]);
+        for (int i = 1; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
+            maxNegative += v[i];
+            maxPositive += v[i];
+            maxNegative = min(maxPositive, maxNegative);
+            maxPositive = max(abs(maxPositive), abs(maxNegative));
         }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
-        cout << endl;
+        maxNegative = abs(maxNegative);
+        int k = max(maxNegative, maxPositive);
+        map<pair<int, int>, int> count;
+        map<pair<int, int>, bool> vis;
+        cout << f(0, n, count, vis, v, k) << endl;
     }
 }

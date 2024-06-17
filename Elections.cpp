@@ -219,31 +219,60 @@ int32_t main()
     {
         int n, c;
         cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
+        vector<int> arr(n), prefixSum(n), leftMax(n), rightMax(n);
 
-        string topper;
-        for (int i = 0; i < n; i++)
+        cin >> arr[0];
+        prefixSum[0] = arr[0];
+        leftMax[0] = arr[0];
+        for (int i = 1; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
-        }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
+            cin >> arr[i];
+            if (i != 0)
             {
-                topper = t;
-                break;
+                prefixSum[i] = arr[i] + prefixSum[i - 1];
+                leftMax[i] = max(arr[i], leftMax[i - 1]);
             }
         }
-        while (topper != "")
+        rightMax[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--)
         {
-            cout << topper << " ";
-            topper = children[topper];
+            rightMax[i] = max(rightMax[i + 1], arr[i]);
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            bool isMaxi = true;
+            // if(i == 0) {
+            //     if(n == 1) cout << 0 << endl;
+            //     continue;
+            //     if(arr[i] + c >= )
+            // }
+            int newVal = arr[i];
+            if (i == 0)
+                newVal += c;
+            if (i && leftMax[i - 1] >= newVal)
+                isMaxi = false;
+            if (i < n - 1 && rightMax[i + 1] > newVal)
+                isMaxi = false;
+            if (arr[0] + c >= newVal)
+                isMaxi = false;
+            if (isMaxi)
+            {
+                cout << 0 << " ";
+            }
+            else
+            {
+                int count = i;
+                int val = prefixSum[i] + c;
+                // cout << "countval " << i << ' ' << arr[i] << " " << count << " " << val << endl;
+                isMaxi = true;
+                if (i < n - 1 && val < rightMax[i + 1])
+                    isMaxi = false;
+                if (isMaxi)
+                    cout << count << " ";
+                else
+                    cout << count + 1 << " ";
+            }
         }
         cout << endl;
     }

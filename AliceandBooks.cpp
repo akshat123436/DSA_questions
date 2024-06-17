@@ -217,34 +217,18 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
+        int n;
+        cin >> n;
+        int last = 0;
+        int secondLast = 0;
+        vector<int> arr(n);
         for (int i = 0; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
+            cin >> arr[i];
+            if (i != n - 1)
+                secondLast = max(secondLast, arr[i]);
         }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
-        cout << endl;
+
+        cout << secondLast + arr[n - 1] << endl;
     }
 }

@@ -202,6 +202,36 @@ int h(string &s)
 
     return val;
 }
+
+int partition(int *arr, int num, int low, int high)
+{
+    int i = low;
+    for (int j = low; j <= high; j++)
+    {
+        if (arr[j] < num)
+        {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+        }
+    }
+    int temp = arr[i];
+    arr[i] = num;
+    arr[high] = temp;
+    return i;
+}
+
+void quickSort(int *arr, int low, int high)
+{
+    if (low >= high)
+        return;
+    int pivot = arr[high];
+    int index = partition(arr, pivot, low, high);
+    quickSort(arr, low, index - 1);
+    quickSort(arr, index + 1, high);
+}
+
 int32_t main()
 {
     fastio();
@@ -217,34 +247,10 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
-
-        string topper;
-        for (int i = 0; i < n; i++)
-        {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
-        }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
+        int arr[] = {9, 5, 8, 4, 2, 7, 3, 7, 4, 7};
+        quickSort(arr, 0, 9);
+        for (int i = 0; i < 10; i++)
+            cout << arr[i] << " ";
         cout << endl;
     }
 }

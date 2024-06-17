@@ -202,6 +202,38 @@ int h(string &s)
 
     return val;
 }
+class Node
+{
+public:
+    int left, right;
+    Node()
+    {
+        left = -1;
+        right = -1;
+    }
+};
+void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
+{
+    if (tree[node].left == -1 && tree[node].right == -1)
+    {
+        cur++;
+        if (cur == m)
+        {
+            ans = node;
+        }
+        return;
+    }
+    if (node == -1)
+        return;
+    f(tree[node].left, m, cur, ans, tree);
+    cur++;
+    if (cur == m)
+    {
+        ans = node;
+    }
+    f(tree[node].right, m, cur, ans, tree);
+    return;
+}
 int32_t main()
 {
     fastio();
@@ -217,5 +249,37 @@ int32_t main()
 
     while (t--)
     {
+        int n;
+        cin >> n;
+        vector<int> arr(n);
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
+        int branches, p;
+        cin >> branches >> p;
+        vector<Node> tree(n);
+        set<int> st;
+        for (int i = 0; i < n; i++)
+            st.insert(i);
+        for (int i = 0; i < branches; i++)
+        {
+            int parent, child;
+            cin >> parent >> child;
+            st.erase(child);
+            if (tree[parent].left == -1)
+            {
+                tree[parent].left = child;
+            }
+            else
+            {
+                tree[parent].right = child;
+            }
+        }
+        int m;
+        cin >> m;
+        int root = *st.begin();
+        int ans = 0;
+        int cur = 0;
+        f(root, m, cur, ans, tree);
+        cout << arr[ans] << endl;
     }
 }

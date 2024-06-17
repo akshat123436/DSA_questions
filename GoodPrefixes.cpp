@@ -217,34 +217,24 @@ int32_t main()
 
     while (t--)
     {
-        int n, c;
-        cin >> n >> c;
-        map<string, string> children;
-        map<string, bool> hasParent;
-        vector<string> allStrings;
+        int n;
+        cin >> n;
+        vector<int> arr(n);
+        for (int i = 0; i < n; i++)
+            cin >> arr[i];
 
-        string topper;
+        map<int, bool> isPresent;
+        int sum = 0;
+        int ans = 0;
         for (int i = 0; i < n; i++)
         {
-            string a, b;
-            cin >> a >> b;
-            children[a] = b;
-            hasParent[b] = true;
-            allStrings.push_back(a);
+            isPresent[arr[i]] = true;
+            sum += arr[i];
+            if (sum % 2)
+                continue;
+            if (isPresent[sum / 2])
+                ans++;
         }
-        for (auto &t : allStrings)
-        {
-            if (!hasParent[t])
-            {
-                topper = t;
-                break;
-            }
-        }
-        while (topper != "")
-        {
-            cout << topper << " ";
-            topper = children[topper];
-        }
-        cout << endl;
+        cout << ans << endl;
     }
 }
