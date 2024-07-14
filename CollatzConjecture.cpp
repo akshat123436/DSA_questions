@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,28 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
-    }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
 int32_t main()
 {
     fastio();
@@ -239,8 +217,27 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int x,y,remainingOp;
+        cin >> x >> y >> remainingOp;
+        bool done = false;
+        do{
+            int normalOperations = y - (x % y);
+            if(normalOperations >= remainingOp){
+                x = x + remainingOp;
+                while(x % y == 0) x /= y;
+                cout << x << endl;
+                done = true;
+                break;
+            if(done) break;
+            }
+            if(done) break;
+            x += normalOperations;
+            while(x%y == 0) x/=y;
+            remainingOp -= normalOperations;
+        }while(x != 1 && remainingOp > 0);
+        if(done) continue;
+        
+        int rem = remainingOp % (y-1);
+        cout << x + rem << endl;
     }
 }

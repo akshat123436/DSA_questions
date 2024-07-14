@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,31 +202,43 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
+
+// segment tree
+int construct(int *st, int start, int end, int i, int *arr)
+{
+    if (start >= end)
+        return st[i] = arr[start];
+
+    int mid = (start + end) / 2;
+    return st[i] = min(construct(st, start, mid, 2 * i + 1, arr), construct(st, mid + 1, end, 2 * i + 2, arr));
+}
+
+int *constructST(int arr[], int n)
+{
+    int *st = new int[4 * n];
+
+    construct(st, 0, n - 1, 0, arr);
+
+    return st;
+}
+
+int f(int st[], int s, int e, int rs, int re, int i)
+{
+    if (s >= rs && e <= re)
+        return st[i];
+    if ((e >= rs && e <= re) || (s >= rs && s <= re) || (rs >= s && re <= e))
+    {
+        return min(f(st, s, (s + e) / 2, rs, re, 2 * i + 1), f(st, (s + e) / 2 + 1, e, rs, re, 2 * i + 2));
     }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
+
+    return INT_MAX;
+
+    // to use : return f(st, 0, n-1, a, b, 0); (finds smallest in the range a, b : 0-based indexing);
+}
+
 int32_t main()
 {
-    fastio();
+    // fastio();
 #ifndef ONLINE_JUDGE
 
     freopen("Error.txt", "w", stderr);
@@ -239,8 +251,53 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int n, m;
+        cin >> n >> m;
+        vector<string> first(n), second(n);
+        
+        for(int i = 0;i<n;i++){
+            string temp;
+            cin >> temp;
+            first[i] = temp;
+        }
+        for(int i = 0;i<n;i++){
+            string temp;
+            cin >> temp;
+            second[i] = temp;
+        }
+        
+        for(int i=  0;i<n-1;i++){
+            for(int j = 0;j<m-1;j++){
+                if(first[i][j]!=second[i][j]){
+                    int diff = second[i][j] - first[i][j];
+                    
+                    if(diff==1 || diff == -2){
+                        first[i][j] += 1;
+                        first[i+1][j] += 2;
+                        first[i][j+1] += 2;
+                        first[i+1][j+1] += 1;
+                        
+                    }
+                    else{
+                        first[i][j] += 2;
+                        first[i+1][j] += 1;
+                        first[i][j+1] += 1;
+                        first[i+1][j+1] += 2;
+                    }
+                    first[i][j] = ((first[i][j]-'0') % 3) + '0';
+                    first[i+1][j] = ((first[i+1][j]-'0') % 3) + '0';
+                    first[i][j+1] = ((first[i][j+1]-'0') % 3) + '0';
+                    first[i+1][j+1] = ((first[i+1][j+1]-'0') % 3) + '0';
+                }
+            }
+        }
+        bool check = true;
+            for(int i = 0;i<n;i++){
+                for(int j= 0;j<m;j++){
+                    if(first[i][j] != second[i][j]) check = false;
+                }
+            }
+            if(check) cout << "YES" << endl;
+            else cout << "NO" << endl;
+        }
     }
-}

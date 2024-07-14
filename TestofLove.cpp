@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,28 +202,37 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
+
+//segment tree
+int construct(int *st, int start, int end, int i, int *arr){
+    if(start >= end) return st[i] = arr[start];
+    
+    int mid = (start + end)/2;
+    return st[i] = min(construct(st, start, mid, 2*i + 1,arr) , construct(st, mid+1, end, 2*i + 2, arr));
+}
+
+int *constructST(int arr[],int n)
+{
+  int *st = new int[4*n];
+  
+  construct(st, 0, n-1, 0, arr);
+  
+  return st;
+}
+
+
+int f(int st[], int s, int e, int rs, int re, int i){
+    if(s >= rs && e <= re) return st[i];
+    if((e >= rs && e <= re) || (s >= rs && s <= re) || (rs >= s && re <= e)) {
+        return min(f(st, s, (s+e)/2, rs, re, 2*i+1), f(st, (s+e)/2 + 1, e, rs, re, 2*i+2));
     }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
+    
+    return INT_MAX;
+    
+    // to use : return f(st, 0, n-1, a, b, 0); (finds smallest in the range a, b : 0-based indexing);
+}
+
+
 int32_t main()
 {
     fastio();
@@ -239,8 +248,64 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int n, m, k;
+        cin >> n >> m >> k;
+        string s;
+        cin >> s;
+        
+        set<int> logs, water;
+        
+        bool croc = false;
+        int lastC = -1;
+        int pos = -1;
+        for(int i = n-1;i>=0;i--){
+            if(s[i] == 'C') {croc = true; lastC = max(lastC, i);}
+            else if(s[i] == 'L'){
+                croc = false;
+                logs.insert(i);
+            }
+            else if(!croc){
+                water.insert(i);
+            }
+        }
+        while(pos < n){
+            // cout << pos << endl;
+            if(pos == -1 || s[pos] == 'L'){
+                if(pos + m >= n) {pos = pos + m; break;}
+                auto logIndex = logs.upper_bound(pos);
+                if(logIndex != logs.end() && pos + m >= (*logIndex)){
+                    pos = *logIndex;
+                }
+                else{
+                    auto waterIndex = water.upper_bound(pos + m);
+                    
+                    if(waterIndex != water.begin())
+                        waterIndex--;
+                    if(waterIndex != water.end() && (*waterIndex) > pos && (*waterIndex <= pos + m)){
+                        pos = *waterIndex;
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+            else{
+                if(pos + k >= n && lastC < pos){
+                    pos = pos + k;
+                }
+                else{
+                auto logIndex = logs.upper_bound(pos);
+                    if(logIndex != logs.end() && pos + k >= (*logIndex)){
+                        int prev = pos;
+                        pos = *logIndex;
+                        k -= (pos - prev);
+                    }
+                    else break;
+                }
+            }
+        }
+        
+        if(pos >= n) cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
 }

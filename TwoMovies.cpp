@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,28 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
-    }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
 int32_t main()
 {
     fastio();
@@ -239,8 +217,56 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int n;
+        cin >> n;
+        vector<int> a(n), b(n);
+        for(int i = 0;i<n;i++) cin >> a[i];
+            for(int j = 0;j<n;j++) cin>> b[j];
+                int asum = 0, bsum = 0, x = 0, y = 0;
+            for(int i = 0;i<n;i++){
+                if(a[i] == b[i]){
+                    if(a[i] == -1)
+                        x++;
+                    else if(a[i] == 1)y++;
+                }
+                else{
+                    if(a[i] > b[i]){
+                        asum += a[i];
+                    }
+                    else{
+                        bsum += b[i];
+                    }
+                }
+            }
+            
+            int absDiff = abs(asum - bsum);
+            if(y > absDiff){
+                if(asum < bsum) asum += absDiff;
+                else bsum += absDiff;
+                y -= absDiff;
+                int des = y / 2;
+                asum += des;
+                bsum += y-des;
+            }
+            else{
+                if(asum < bsum) asum += y;
+                else bsum+=y;
+            }
+            // cout << x << " " <<y << " " << asum << " " << bsum << endl;
+            absDiff = abs(asum - bsum);
+            if(x > absDiff){
+                if(asum > bsum) asum -= absDiff;
+                else bsum -= absDiff;
+                x -= absDiff;
+                int des = x/2;
+                asum -= des;
+                bsum -= x-des;
+            }
+            else {
+                if(asum > bsum) asum -= x;
+                else bsum -= x;
+            }
+            cout << min(asum, bsum) << endl;
+            
+        }
     }
-}

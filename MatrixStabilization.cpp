@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,28 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
-    }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
 int32_t main()
 {
     fastio();
@@ -239,8 +217,44 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> mat(n, vector<int> (m));
+        for(int i = 0;i<n;i++) for(int j = 0;j<m;j++) cin >> mat[i][j];
+            
+            for(int i = 0;i<n;i++){
+                for(int j = 0;j<m;j++){
+                    bool check = true;
+                    int cur = mat[i][j];
+                    int maxx = 0;
+                    if(i && mat[i-1][j] >= cur){
+                        check = false;
+                        
+                    }
+                    else if(i) maxx = max(maxx, mat[i-1][j]); 
+                    if(i<n-1 && mat[i+1][j] >= cur){
+                        
+                        check = false;
+                    }
+                    else if(i<n-1) maxx = max(maxx, mat[i+1][j]);
+                    if(j && mat[i][j-1] >= cur){
+                        
+                        check = false;
+                    }
+                    else if(j) maxx = max(maxx, mat[i][j-1]);
+                    if(j < m-1 && mat[i][j+1] >= cur){
+                        
+                        check = false;
+                    }
+                    else if(j<m-1) maxx = max(maxx, mat[i][j+1]);
+                    if(check){
+                        mat[i][j] = maxx;
+                    }
+                }
+            }
+            for(int i = 0;i<n;i++){
+                for(int j = 0;j<m;j++) cout << mat[i][j] << " ";
+                    cout << endl;
+            }
+        }
     }
-}

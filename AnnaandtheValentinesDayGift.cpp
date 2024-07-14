@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -202,28 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Parent{
-  private:
-  int a;
-  public:
-    Parent(int val){
-        a = val;
-    }
-  void print()  {
-    cout << "parent : " << a << endl;
-  }
-};
-class Children : public Parent{
-private:
-    int c;
-public:
-    Children(int val) : Parent(val * 2){
-        c = val;
-    }
-    void printChildren(){
-        cout << "children : "<< c << endl;
-    }
-};
 int32_t main()
 {
     fastio();
@@ -239,8 +217,61 @@ int32_t main()
 
     while (t--)
     {
-        Children c(10);
-        c.printChildren();
-        c.print();
+        int n, m;
+        cin >> n >> m;
+        vector<int> arr(n);
+        for(int i = 0;i<n;i++) cin >> arr[i];
+            
+            priority_queue<pair<int,int>> p;
+        
+        for(auto &a : arr){
+            int count = 0;
+            int temp = a;
+            while(temp){
+                count++;
+                temp /= 10;
+            }
+            temp = a;
+            int zeros = 0;
+            while(temp % 10 ==0){
+                zeros++;
+                temp /= 10;
+            }
+            p.push({zeros, count});
+        }
+        
+        bool anna = true;
+        
+        while(p.size() > 1){
+            if(anna){
+                auto cur = p.top();
+                p.pop();
+                int count = cur.second - cur.first;
+                int zeros = 0;
+                p.push({zeros, count});
+            }
+            else{
+                auto cur = p.top();
+                p.pop();
+                auto curSecond = p.top();
+                p.pop();
+                int count = cur.second + curSecond.second;
+                int zeros = min(cur.first, curSecond.first);
+                p.push({zeros, count});
+            }
+            anna = !anna;
+        }
+        if(anna){
+            auto cur = p.top();
+            p.pop();
+            int count = cur.second - cur.first;
+            int zeros = 0;
+            p.push({zeros, count});
+        }
+        int finalCount = p.top().second;
+        if(m > finalCount - 1){
+            cout << "Anna" << endl;
+        }
+        else cout << "Sasha" << endl;
     }
 }
