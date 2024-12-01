@@ -202,38 +202,37 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
+
+//segment tree
+int construct(int *st, int start, int end, int i, int *arr){
+    if(start >= end) return st[i] = arr[start];
+    
+    int mid = (start + end)/2;
+    return st[i] = min(construct(st, start, mid, 2*i + 1,arr) , construct(st, mid+1, end, 2*i + 2, arr));
 }
+
+int *constructST(int arr[],int n)
+{
+  int *st = new int[4*n];
+  
+  construct(st, 0, n-1, 0, arr);
+  
+  return st;
+}
+
+
+int f(int st[], int s, int e, int rs, int re, int i){
+    if(s >= rs && e <= re) return st[i];
+    if((e >= rs && e <= re) || (s >= rs && s <= re) || (rs >= s && re <= e)) {
+        return min(f(st, s, (s+e)/2, rs, re, 2*i+1), f(st, (s+e)/2 + 1, e, rs, re, 2*i+2));
+    }
+    
+    return INT_MAX;
+    
+    // to use : return f(st, 0, n-1, a, b, 0); (finds smallest in the range a, b : 0-based indexing);
+}
+
+
 int32_t main()
 {
     fastio();
@@ -249,20 +248,22 @@ int32_t main()
 
     while (t--)
     {
-        int n;
-        cin >> n;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
-        {
-            cin >> arr[i];
-        }
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = 0; j < n - i - 1; j++)
-            {
-                arr[j] = arr[j] + arr[j + 1];
+        int n, k;
+        cin >> n >> k;
+        int op = 0;
+        while(n>1){
+            if(n <= k*k){
+                int groups = n / k;
+                if(n%k >= 2) groups++;
+                op += groups + 1;
+                n = 0;
+            }
+            else{
+                int groups = k-1;
+                n = n - (k-1) * k;
+                op += groups + 1;
             }
         }
-        cout << arr[0];
+        cout << op << endl;
     }
 }

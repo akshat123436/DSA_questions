@@ -202,38 +202,50 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
+
+//segment tree
+int construct(int *st, int start, int end, int i, int *arr){
+    if(start >= end) return st[i] = arr[start];
+    
+    int mid = (start + end)/2;
+    return st[i] = min(construct(st, start, mid, 2*i + 1,arr) , construct(st, mid+1, end, 2*i + 2, arr));
 }
+
+int *constructST(int arr[],int n)
+{
+  int *st = new int[4*n];
+  
+  construct(st, 0, n-1, 0, arr);
+  
+  return st;
+}
+
+
+int f(int st[], int s, int e, int rs, int re, int i){
+    if(s >= rs && e <= re) return st[i];
+    if((e >= rs && e <= re) || (s >= rs && s <= re) || (rs >= s && re <= e)) {
+        return min(f(st, s, (s+e)/2, rs, re, 2*i+1), f(st, (s+e)/2 + 1, e, rs, re, 2*i+2));
+    }
+    
+    return INT_MAX;
+    
+    // to use : return f(st, 0, n-1, a, b, 0); (finds smallest in the range a, b : 0-based indexing);
+}
+
+vector<int> f(vector<vector<int>> &tree, int node, int parent, vector<int> &powers){
+    int val1 = powers[node], val2 = 0;
+    
+    for(auto &a : tree[node]){
+        if(a != parent){
+            vector<int> temp = f(tree, a, node, powers);
+            val1 += temp[1];
+            val2 += temp[0];
+        }
+    }
+    
+    return {val1, val2};
+}
+
 int32_t main()
 {
     fastio();
@@ -251,18 +263,21 @@ int32_t main()
     {
         int n;
         cin >> n;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
-        {
-            cin >> arr[i];
+        vector<int> powers(n);
+        int ans = 0;
+        for(int i = 0;i<n;i++) {cin >> powers[i]; ans += powers[i];}
+            
+        vector<vector<int>> tree(n);
+    
+        for(int i = 0;i<n-1;i++){
+            int x, y;
+            cin >> x >> y;
+            tree[x-1].push_back(y-1);
+            tree[y-1].push_back(x-1);
         }
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = 0; j < n - i - 1; j++)
-            {
-                arr[j] = arr[j] + arr[j + 1];
-            }
-        }
-        cout << arr[0];
+        
+        vector<int> vals = f(tree, 0, -1, powers);
+        
+        cout << ans + min(vals[0], vals[1]) << endl;
     }
 }

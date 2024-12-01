@@ -202,38 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
-}
 int32_t main()
 {
     fastio();
@@ -251,18 +219,24 @@ int32_t main()
     {
         int n;
         cin >> n;
-        vector<int> arr(n);
+        string s, t;
+        cin >> s >> t;
+        bool oneFound = false;
+        bool pos = true;
         for (int i = 0; i < n; i++)
         {
-            cin >> arr[i];
-        }
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = 0; j < n - i - 1; j++)
+            if (s[i] == '1')
+                oneFound = true;
+            if (s[i] != t[i])
             {
-                arr[j] = arr[j] + arr[j + 1];
+                if (!oneFound && s[i] == '0')
+                    pos = false;
             }
         }
-        cout << arr[0];
+
+        if (pos)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
 }

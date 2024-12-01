@@ -202,40 +202,41 @@ int h(string &s)
 
     return val;
 }
-class Node
+
+int f(int i, vector<int> &arr, vector<int> &dp, int n, int x)
 {
-public:
-    int left, right;
-    Node()
+    if (i >= n)
+        return 0;
+    if (dp[i] != -1)
+        return dp[i];
+
+    int sum = arr[i];
+    int val = 0;
+    if (sum <= x)
+        val++;
+    else
+        sum = 0;
+    for (int j = i + 1; j < n; j++)
     {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
+        sum += arr[j];
+        if (sum <= x)
+            val++;
+        else
         {
-            ans = node;
+
+            f(j + 1, arr, dp, n, x);
+            sum = 0;
         }
-        return;
+        // if (i == 0)
+        //     cout << val << " ";
     }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
+
+    return dp[i] = val;
 }
+
 int32_t main()
 {
+
     fastio();
 #ifndef ONLINE_JUDGE
 
@@ -249,20 +250,48 @@ int32_t main()
 
     while (t--)
     {
-        int n;
-        cin >> n;
+        int n, x;
+        cin >> n >> x;
         vector<int> arr(n);
         for (int i = 0; i < n; i++)
-        {
             cin >> arr[i];
-        }
-        for (int i = 0; i < n - 1; i++)
+
+        vector<int> dp(n + 1, -1);
+        dp[n] = 0;
+        for (int i = n - 1; i >= 0; i--)
         {
-            for (int j = 0; j < n - i - 1; j++)
+            int sum = arr[i];
+            int val = 0;
+            if (sum <= x)
+                val++;
+            else
+                sum = 0;
+            for (int j = i + 1; j < n; j++)
             {
-                arr[j] = arr[j] + arr[j + 1];
+                sum += arr[j];
+                if (sum <= x)
+                    val++;
+                else
+                {
+                    sum = 0;
+                }
+                // if (i == 0)
+                //     cout << val << " ";
             }
+            dp[]
         }
-        cout << arr[0];
+        for (int i = 0; i < n; i++)
+            f(i, arr, dp, n, x);
+        // cout << endl;
+        int ans = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+
+            ans += dp[i];
+            // cout << dp[i] << " ";
+        }
+        // cout << endl;
+        cout << ans << endl;
     }
 }

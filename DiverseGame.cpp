@@ -202,38 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
-}
 int32_t main()
 {
     fastio();
@@ -249,20 +217,40 @@ int32_t main()
 
     while (t--)
     {
-        int n;
-        cin >> n;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
+        int n, m;
+        cin >> n >> m;
+
+        int maxNum = n * m;
+
+        if (maxNum == 1)
         {
-            cin >> arr[i];
+            int temp;
+            cin >> temp;
+            cout << -1 << endl;
         }
-        for (int i = 0; i < n - 1; i++)
+        else
         {
-            for (int j = 0; j < n - i - 1; j++)
+            // vector<int> arr(maxNum);
+            // for (int i = 0; i < maxNum; i++)
+            // {
+            //     arr[i] = i + 1;
+            // }
+
+            // sort(arr.begin(), arr.end(), greater<int>());
+
+            for (int i = 0; i < n; i++)
             {
-                arr[j] = arr[j] + arr[j + 1];
+                for (int j = 0; j < m; j++)
+                {
+                    int temp;
+                    cin >> temp;
+                    if (temp != maxNum)
+                        cout << temp + 1 << " ";
+                    else
+                        cout << 1 << " ";
+                }
+                cout << endl;
             }
         }
-        cout << arr[0];
     }
 }

@@ -202,38 +202,6 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
-}
 int32_t main()
 {
     fastio();
@@ -250,19 +218,109 @@ int32_t main()
     while (t--)
     {
         int n;
+        string s;
         cin >> n;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
+        cin >> s;
+        priority_queue<string, vector<string>, greater<string>> pq;
+        set<string> st;
+
+        for (int i = 0; i < s.length(); i++)
         {
-            cin >> arr[i];
-        }
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = 0; j < n - i - 1; j++)
+            string s1;
+            s1.push_back(s[i]);
+            st.insert(s1);
+            if (i + 1 < s.length())
             {
-                arr[j] = arr[j] + arr[j + 1];
+                s1.push_back(s[i + 1]);
+                st.insert(s1);
+                if (i + 2 < s.length())
+                {
+                    s1.push_back(s[i + 2]);
+                    st.insert(s1);
+                }
             }
         }
-        cout << arr[0];
+        for (char c = 'a'; c <= 'z'; c++)
+        {
+            string s1;
+            s1.push_back(c);
+            pq.push(s1);
+        }
+        bool f = false;
+        while (!pq.empty())
+        {
+            // cout << pq.top() << endl;
+            string newString = pq.top();
+            pq.pop();
+            if (st.find(newString) == st.end())
+            {
+                cout << newString << endl;
+                f = true;
+                break;
+            }
+        }
+        if (f)
+        {
+            continue;
+        }
+        for (char c = 'a'; c <= 'z'; c++)
+        {
+            for (char t = 'a'; t <= 'z'; t++)
+            {
+                string s1;
+                s1.push_back(c);
+                s1.push_back(t);
+                // cout << s1 << endl;
+                pq.push(s1);
+            }
+        }
+        while (!pq.empty())
+        {
+            // cout << pq.top() << endl;
+            string newString = pq.top();
+            pq.pop();
+            if (st.find(newString) == st.end())
+            {
+                cout << newString << endl;
+                f = true;
+                break;
+            }
+        }
+        if (f)
+        {
+            continue;
+        }
+        for (char c = 'a'; c <= 'z'; c++)
+        {
+            for (char t = 'a'; t <= 'z'; t++)
+            {
+                for (char y = 'a'; y <= 'z'; y++)
+                {
+                    string s1;
+                    s1.push_back(c);
+                    s1.push_back(t);
+                    s1.push_back(y);
+                    pq.push(s1);
+                }
+            }
+        }
+        while (!pq.empty())
+        {
+            // cout << pq.top() << endl;
+            string newString = pq.top();
+            pq.pop();
+            if (st.find(newString) == st.end())
+            {
+                cout << newString << endl;
+                f = true;
+                break;
+            }
+        }
+        if (f)
+        {
+            continue;
+        }
+
+        // cout << pq.size() << endl;
     }
 }

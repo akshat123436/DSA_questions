@@ -7,9 +7,9 @@
 using namespace std;
 
 #define fastio()                      \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL)
+ios_base::sync_with_stdio(false); \
+cin.tie(NULL);                    \
+cout.tie(NULL)
 #define MOD 1000000007
 #define MOD1 998244353
 #define INF 1e18
@@ -31,9 +31,9 @@ typedef long double lld;
 
 #ifndef ONLINE_JUDGE
 #define debug(x)       \
-    cerr << #x << " "; \
-    _print(x);         \
-    cerr << endl;
+cerr << #x << " "; \
+_print(x);         \
+cerr << endl;
 #else
 #define debug(x)
 #endif
@@ -217,29 +217,88 @@ int32_t main()
 
     while (t--)
     {
+        // int n;
+        // cin >> n;
+        // string s;
+        // cin >> s;
+        // int ans = 0;
+        // bool zeroCount = 0;
+        // int minimum = 100;
+        // if(n == 2) {cout << (s[1]-'0') * 1 + (s[0]-'0') * 10 << endl; continue;}
+        // for(int i = 0;i<n-1;i++){
+        //     if(s[i] == '0') zeroCount = true;
+        //     if(s[i] != '1'){
+        //         ans += s[i] - '0';
+        //     }
+        //     minimum = min(minimum, (int)(s[i] - '0'));
+        // }
+        // if(s[n-1] == '0') zeroCount = true;
+        // if(s[n-1] != '1'){
+        //     ans += s[n-1] - '0';
+        // }
+        // if(zeroCount && n > 3 || n>2 && s[0] == '0'){
+        //     cout << 0 << endl;
+        //     continue;
+        // }
+        // cout << ans + 10 * minimum << endl;
+
         int n;
         cin >> n;
         string s;
         cin >> s;
-        int ans = 0;
-        bool zeroCount = 0;
-        int minimum = 100;
-        if(n == 2) {cout << (s[1]-'0') * 1 + (s[0]-'0') * 10 << endl; continue;}
-        for(int i = 0;i<n-1;i++){
-            if(s[i] == '0') zeroCount = true;
-            if(s[i] != '1'){
-                ans += s[i] - '0';
-            }
-            minimum = min(minimum, (int)(s[i] - '0'));
+
+        if (s.size() == 2) {
+            cout << stoi(s) << endl;
+            continue;
         }
-        if(s[n-1] == '0') zeroCount = true;
-        if(s[n-1] != '1'){
-            ans += s[n-1] - '0';
+        bool zeroFound = false;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') zeroFound = true;
         }
-        if(zeroCount && n > 3 || n>2 && s[0] == '0'){
+        if (zeroFound && !(s.size() == 3 && s[1] == '0' && s[0] != '0' && s[2] != '0')) {
             cout << 0 << endl;
             continue;
         }
-        cout << ans + 10 * minimum << endl;
+        vector<int> right(n), left(n);
+
+        int sum = 0;
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] != '1') sum += s[i] - '0';
+            right[i] = sum;
+        }
+        sum = 0;
+        for(int i= 0;i<n;i++){
+            if(s[i] != '1') sum += s[i] - '0';
+            left[i] = sum;
+        }
+        int ans = INT_MAX;
+        for(int i= 0;i<n-1;i++){
+            int cur = (s[i]-'0') * 10 + (s[i+1]-'0');
+            
+            if(i>0){
+                cur += max(left[i-1],1LL);
+            }
+            if(i<n-2){
+                cur += max(right[i+2], 1LL);
+            }
+            
+            ans = min(ans, cur);
+            cur = (s[i]-'0') * 10 + (s[i+1]-'0');
+            if(cur == 1){
+                if(i>0 && i<n-2){
+                    ans = min(ans, max(left[i-1] + right[i+2], 1LL));
+                }
+                else if(i>0){
+                    ans = min(ans, max(left[i-1],1LL));
+                }
+                else if(i<n-2){
+                    ans = min(ans, max(right[i+2],1LL));
+                }
+            }
+        }
+        
+        cout << ans << endl;
+        
     }
 }

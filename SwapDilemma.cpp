@@ -202,38 +202,81 @@ int h(string &s)
 
     return val;
 }
-class Node
-{
-public:
-    int left, right;
-    Node()
-    {
-        left = -1;
-        right = -1;
-    }
-};
-void f(int node, int m, int &cur, int &ans, vector<Node> &tree)
-{
-    if (tree[node].left == -1 && tree[node].right == -1)
-    {
-        cur++;
-        if (cur == m)
-        {
-            ans = node;
-        }
-        return;
-    }
-    if (node == -1)
-        return;
-    f(tree[node].left, m, cur, ans, tree);
-    cur++;
-    if (cur == m)
-    {
-        ans = node;
-    }
-    f(tree[node].right, m, cur, ans, tree);
-    return;
+
+//segment tree
+int construct(int *st, int start, int end, int i, int *arr){
+    if(start >= end) return st[i] = arr[start];
+    
+    int mid = (start + end)/2;
+    return st[i] = min(construct(st, start, mid, 2*i + 1,arr) , construct(st, mid+1, end, 2*i + 2, arr));
 }
+
+int *constructST(int arr[],int n)
+{
+  int *st = new int[4*n];
+  
+  construct(st, 0, n-1, 0, arr);
+  
+  return st;
+}
+
+
+int f(int st[], int s, int e, int rs, int re, int i){
+    if(s >= rs && e <= re) return st[i];
+    if((e >= rs && e <= re) || (s >= rs && s <= re) || (rs >= s && re <= e)) {
+        return min(f(st, s, (s+e)/2, rs, re, 2*i+1), f(st, (s+e)/2 + 1, e, rs, re, 2*i+2));
+    }
+    
+    return INT_MAX;
+    
+    // to use : return f(st, 0, n-1, a, b, 0); (finds smallest in the range a, b : 0-based indexing);
+}
+
+void merge(vector<int> &arr, map<int,int> &pos, int start, int mid, int end, int &swaps){
+    vector<int> temp(end-start+1);
+    
+    int i = start, j = mid+1;
+    int k = 0;
+    
+    while(i<=mid && j<=end){
+        if(pos[arr[i]] < pos[arr[j]]){
+            temp[k] = arr[i];
+            i++;
+        }
+        else{
+            temp[k] = arr[j];
+            j++;
+            swaps+=mid-i+1;
+        }
+        k++;
+    }
+    
+    while(i<=mid){
+        temp[k] = arr[i];
+        i++;
+        k++;
+    }
+    while(j<=end){
+        temp[k] = arr[j];
+        j++;
+        k++;
+    }
+    i = start;
+    for(auto &a : temp){
+        arr[i] = a;
+        i++;
+    }
+}
+
+void f(vector<int> &arr, map<int,int> &pos, int i, int j, int &swaps){
+    // cout << i << j << endl;
+    if(i>=j) return;
+    int mid = (i+j)/2;
+    f(arr, pos, i, mid, swaps);
+    f(arr, pos, mid+1, j, swaps);
+    merge(arr, pos, i, mid, j, swaps);
+}
+
 int32_t main()
 {
     fastio();
@@ -251,18 +294,36 @@ int32_t main()
     {
         int n;
         cin >> n;
-        vector<int> arr(n);
-        for (int i = 0; i < n; i++)
-        {
-            cin >> arr[i];
+        vector<int> first(n), second(n);
+        
+        for(int i = 0;i<n;i++){
+            cin >> first[i];
         }
-        for (int i = 0; i < n - 1; i++)
-        {
-            for (int j = 0; j < n - i - 1; j++)
-            {
-                arr[j] = arr[j] + arr[j + 1];
-            }
+        
+        map<int, int> pos;
+        map<int,bool> isPresent;
+        
+        for(int i = 0;i<n;i++){
+            cin >> second[i];
+            isPresent[second[i]] = true;
+            pos[second[i]] = i;
         }
-        cout << arr[0];
+        
+        bool poss = true;
+        for(int i = 0;i<n;i++){
+            if(!isPresent[first[i]]) poss = false;
+        }
+        
+        if(!poss) {
+            cout << "NO" << endl;
+            continue;
+        }
+        
+        int swapsRequired = 0;
+        
+        f(first, pos, 0, n-1, swapsRequired);
+        // cout << swapsRequired << endl;
+        if(swapsRequired % 2== 0)cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
 }
